@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Woofy McWoofson API
+  version: 1.0.0
+  description: |
+    🐶 Dog-themed, enterprise-compliant API for automation, compliance, and workflow.
+servers:
+  - url: https://api.woofymcwoofson.com/v1
+paths:
+  /hello:
+    get:
+      summary: Woofy greets you!
+      responses:
+        '200':
+          description: A friendly dog greeting
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
