@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="20">
+  <rect width="120" height="20" rx="3" fill="#555"/>
+  <rect x="68" width="52" height="20" rx="3" fill="#4c1"/>
+  <text x="8" y="15" fill="#fff" font-family="Verdana" font-size="11">goodest boy</text>
+  <text x="75" y="15" fill="#fff" font-family="Verdana" font-size="11">v1.0.0</text>
+</svg>

@@ -1,0 +1,19 @@
+# 🐾 WOOFY Makefile
+
+install:
+	npm install
+
+lint:
+	npm run lint
+
+test:
+	npm test
+
+start:
+	npm start
+
+docker-build:
+	docker build -t woofy-mcwoofson .
+
+docker-run:
+	docker-compose up

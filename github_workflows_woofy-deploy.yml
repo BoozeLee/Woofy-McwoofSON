@@ -1,0 +1,17 @@
+name: "Woofy: Roll Over (Deploy)"
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  roll-over:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐾 Checkout code
+        uses: actions/checkout@v3
+      - name: 🐾 Deploy to AWS (Roll Over!)
+        run: ./scripts/deploy.sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -1,0 +1,6 @@
+# 🐾 CODEOWNERS for critical areas
+
+/src/        @Amazon-Q
+/integrations/ @Amazon-Q
+/tests/security/ @Amazon-Q
+/docs/        @BoozeLee
