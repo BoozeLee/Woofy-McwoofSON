@@ -1,0 +1,174 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'WOOFY McWOOFSON AWS Hallucination Mitigation System'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: 'woofy-mitigation'
+
+Resources:
+  # DynamoDB for tracking hallucinations
+  HallucinationTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${EnvironmentName}-hallucination-tracking'
+      AttributeDefinitions:
+        - AttributeName: 'request_id'
+          AttributeType: 'S'
+        - AttributeName: 'timestamp'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'request_id'
+          KeyType: 'HASH'
+        - AttributeName: 'timestamp'
+          KeyType: 'RANGE'
+      BillingMode: 'PAY_PER_REQUEST'
+
+  # SNS for alerts
+  AlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub '${EnvironmentName}-alerts'
+
+  # Lambda for detection
+  DetectionFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${EnvironmentName}-detection'
+      Runtime: 'python3.11'
+      Handler: 'index.handler'
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import re
+          from datetime import datetime
+          
+          dynamodb = boto3.resource('dynamodb')
+          sns = boto3.client('sns')
+          
+          def detect_hallucination(text, confidence):
+              patterns = [
+                  r'\b(?:definitely|certainly)\s+(?:not|never)\b',
+                  r'\b(?:everyone|nobody)\s+(?:sometimes|often)\b'
+              ]
+              
+              score = 0
+              for pattern in patterns:
+                  if re.search(pattern, text, re.IGNORECASE):
+                      score += 0.3
+              
+              if confidence < 0.8:
+                  score += 0.4
+                  
+              return min(score, 1.0)
+          
+          def handler(event, context):
+              body = json.loads(event.get('body', '{}'))
+              text = body.get('text', '')
+              confidence = body.get('confidence', 0.5)
+              
+              hallucination_score = detect_hallucination(text, confidence)
+              
+              if hallucination_score > 0.7:
+                  # Store in DynamoDB
+                  table = dynamodb.Table('woofy-mitigation-hallucination-tracking')
+                  table.put_item(Item={
+                      'request_id': context.aws_request_id,
+                      'timestamp': datetime.utcnow().isoformat(),
+                      'score': hallucination_score,
+                      'text': text[:500]
+                  })
+                  
+                  # Send alert
+                  sns.publish(
+                      TopicArn='arn:aws:sns:us-east-1:123456789012:woofy-mitigation-alerts',
+                      Message=f'High hallucination detected: {hallucination_score}',
+                      Subject='Hallucination Alert'
+                  )
+              
+              return {
+                  'statusCode': 200,
+                  'body': json.dumps({
+                      'hallucination_score': hallucination_score,
+                      'action': 'blocked' if hallucination_score > 0.7 else 'allowed'
+                  })
+              }
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref HallucinationTable
+          TOPIC_ARN: !Ref AlertTopic
+
+  # IAM Role for Lambda
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: HallucinationMitigationPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - sns:Publish
+                Resource:
+                  - !GetAtt HallucinationTable.Arn
+                  - !Ref AlertTopic
+
+  # API Gateway
+  ApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub '${EnvironmentName}-api'
+
+  ApiResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ParentId: !GetAtt ApiGateway.RootResourceId
+      PathPart: 'detect'
+
+  ApiMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ResourceId: !Ref ApiResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DetectionFunction.Arn}/invocations'
+
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: ApiMethod
+    Properties:
+      RestApiId: !Ref ApiGateway
+      StageName: 'prod'
+
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DetectionFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub '${ApiGateway}/*/POST/detect'
+
+Outputs:
+  ApiEndpoint:
+    Value: !Sub 'https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/detect'
+  TableName:
+    Value: !Ref HallucinationTable

@@ -17,6 +17,14 @@ from dotenv import load_dotenv
 import requests
 from datetime import datetime, timedelta
 
+# Import hallucination mitigation system
+try:
+    from hallucination_mitigator import HallucinationMitigator, hallucination_mitigation_decorator, get_mitigator
+    HALLUCINATION_MITIGATION_ENABLED = True
+except ImportError:
+    logger.warning("Hallucination mitigation system not available - running without AI safety checks")
+    HALLUCINATION_MITIGATION_ENABLED = False
+
 # Load environment variables
 load_dotenv()
 
@@ -92,7 +100,7 @@ class SecurePerplexityClient:
         return True
 
     def research(self, query: str, citations: bool = True) -> Dict:
-        """Secure research query with full protection"""
+        """Secure research query with full protection and hallucination mitigation"""
         if not self._check_rate_limit():
             raise SecurityError("Rate limit exceeded - potential abuse detected")
 
@@ -104,6 +112,7 @@ class SecurePerplexityClient:
         - Do not include sensitive information
         - Verify all facts before responding
         - Use only reputable sources
+        - Be precise and avoid speculation
         """
 
         headers = {
@@ -117,7 +126,7 @@ class SecurePerplexityClient:
             "messages": [
                 {
                     "role": "system",
-                    "content": "You are a secure research assistant. Always provide citations and verify information.",
+                    "content": "You are a secure research assistant. Always provide citations, verify information, and avoid speculation or unverified claims.",
                 },
                 {"role": "user", "content": secure_prompt},
             ],
@@ -134,14 +143,57 @@ class SecurePerplexityClient:
             self.request_history.append(datetime.now())
 
             if response.status_code == 200:
-                result = {
-                    "success": True,
-                    "content": response.json()["choices"][0]["message"]["content"],
-                    "usage": response.json().get("usage", {}),
-                    "timestamp": datetime.now().isoformat(),
-                }
+                raw_content = response.json()["choices"][0]["message"]["content"]
+
+                # Apply hallucination mitigation if available
+                if HALLUCINATION_MITIGATION_ENABLED:
+                    mitigator = get_mitigator()
+                    detection_result = mitigator.detect_hallucinations(raw_content, 0.9)  # High confidence for research
+
+                    if detection_result.detected:
+                        self.logger.warning(f"Hallucination detected in research response: {detection_result.probability:.2%}")
+                        mitigated_content, _ = mitigator.mitigate_response(raw_content, detection_result, payload)
+
+                        result = {
+                            "success": True,
+                            "content": mitigated_content,
+                            "original_content": raw_content,
+                            "hallucination_check": {
+                                "detected": True,
+                                "probability": detection_result.probability,
+                                "severity": detection_result.severity,
+                                "mitigation_applied": True
+                            },
+                            "usage": response.json().get("usage", {}),
+                            "timestamp": datetime.now().isoformat(),
+                        }
+                    else:
+                        result = {
+                            "success": True,
+                            "content": raw_content,
+                            "hallucination_check": {
+                                "detected": False,
+                                "probability": detection_result.probability,
+                                "severity": detection_result.severity,
+                                "mitigation_applied": False
+                            },
+                            "usage": response.json().get("usage", {}),
+                            "timestamp": datetime.now().isoformat(),
+                        }
+                else:
+                    result = {
+                        "success": True,
+                        "content": raw_content,
+                        "hallucination_check": {
+                            "mitigation_disabled": True,
+                            "note": "Hallucination mitigation system not available"
+                        },
+                        "usage": response.json().get("usage", {}),
+                        "timestamp": datetime.now().isoformat(),
+                    }
+
                 self.logger.info(
-                    f"Perplexity research successful: {len(result['content'])} chars"
+                    f"Perplexity research successful: {len(result['content'])} chars, hallucination check: {result['hallucination_check']}"
                 )
                 return result
             else:
