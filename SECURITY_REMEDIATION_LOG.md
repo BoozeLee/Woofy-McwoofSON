@@ -2,7 +2,8 @@
 
 **Project:** WOOFY McWOOFSON - Enterprise AI Assistant
 **Date Created:** 2025-09-07
-**Last Updated:** 2025-09-07
+**Last Updated:** 2025-09-08
+**History Cleanup Verification:** 2025-09-08
 **Security Officer:** Kilo Code
 
 ---
@@ -218,6 +219,23 @@ This log documents all security remediation actions, credential exposures, and c
 ---
 
 ### Incident #3: OAuth Configuration Gap (2025-01-27)
+### Incident #4: Credential Rotation & History Cleanup Verification (2025-09-08)
+**Status:** ✅ RESOLVED
+**Severity:** HIGH (Preventive / Hardening)
+**Description:** Comprehensive rotation of active credentials (Gmail OAuth, GitHub tokens) and verification of repository history cleanliness.
+**Actions Taken:**
+- Rotated Gmail OAuth credentials & updated application / `.env` entries
+- Rotated GitHub personal access tokens
+- Confirmed removal (and absence) of legacy credential artifacts (`Tracing/copilot.json`, `Tracing/api_keys.json`)
+- Executed BFG-based cleanup earlier; re-validation scan shows no residual secret patterns
+- Appended rotation events to CREDENTIAL_ROTATION_AND_HISTORY_CLEANUP.md
+- Added onboarding reminders for future environment additions
+**Evidence:**
+- Updated audit log entries (CREDENTIAL_ROTATION_AND_HISTORY_CLEANUP.md)
+- No git log traces for retired credential files
+- Secret scan report: zero findings (KILOCODER_SECRET_REPORT.txt)
+**Audit Log Entry:** _2025-09-08_ Credential rotation & history cleanup verified; artifacts absent; logs updated – Copilot
+
 **Status:** ✅ RESOLVED - DEPLOYMENT APPROVED
 **Severity:** HIGH → RESOLVED
 **Description:** OAuth authentication system successfully configured for Gmail integration
@@ -243,5 +261,28 @@ This log documents all security remediation actions, credential exposures, and c
 
 ---
 
-**Last Review:** 2025-01-27
-**Next Review:** Upon OAuth completion
+---
+
+### Incident #5: Anthropic Claude VS Code Extension Installation Blocker (2025-09-08)
+**Status:** BLOCKED
+**Severity:** LOW
+**Description:** Attempted installation of official Anthropic Claude VS Code extension failed due to extension not being available in the marketplace.
+**Actions Taken:**
+- Attempted installation with ID 'anthropic.claude'
+- Attempted with --force flag
+- Attempted alternative ID 'claude-ai.claude'
+- All attempts failed with "Extension not found"
+**Evidence:**
+- Command outputs show extension not found
+- Marketplace search confirms no matching extension
+**Audit Log Entry:**
+- _2025-09-08_ Anthropic Claude VS Code extension not available in marketplace; installation blocked; documented for escalation – Kilo Code
+**Next Steps:**
+- Await official release of Anthropic Claude extension
+- Monitor marketplace for updates
+- Escalate to compliance team if required for workflow
+
+---
+
+**Last Review:** 2025-09-08
+**Next Review:** Upon extension availability or escalation

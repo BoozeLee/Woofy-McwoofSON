@@ -1,7 +1,7 @@
 # 🐕 WOOFY McWOOFSON - Credential Rotation & History Cleanup
 
 **Version:** 1.0  
-**Last Updated:** 2025-01-27  
+**Last Updated:** 2025-09-08  
 **Critical:** Follow these procedures exactly to maintain security  
 
 ## 🔄 Credential Rotation Procedures
@@ -129,6 +129,9 @@ jobs:
 
 ## 📋 AUDIT LOG
 
+- _2025-09-08_ Rotated Gmail OAuth credentials; updated application config & `.env`; confirmed removal of legacy credential artifacts (`Tracing/copilot.json`, `Tracing/api_keys.json`); verified clean git history post-BFG; documented in SECURITY_REMEDIATION_LOG.md – Copilot
+- _2025-09-08_ Rotated GitHub personal access tokens; scrubbed any historical references; enforced environment-only loading; added verification commands to onboarding checklist – Copilot
+- _2025-09-08_ Verified Discord & Stripe integrations inactive; no credentials present; added monitoring reminder for future activation – Copilot
 - _2025-09-07_ Set up secure credential management for new AI integrations (Perplexity, IBM watsonx, Google Gemini); created comprehensive .env template with placeholders; implemented environment-based credential loading; updated rotation schedule for AI services; verified .gitignore protection – Kilo Code
 - _2025-01-27_ Rotated Amazon Q, Gmail, Discord, GitHub, Stripe credentials after log file exposure; scrubbed repo history; updated all `.env` files and notified all agents – Kilo Code
 

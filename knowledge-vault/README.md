@@ -34,9 +34,11 @@
 - **[../AWS_CENTRALIZED_CREDENTIAL_MANAGEMENT.md](../AWS_CENTRALIZED_CREDENTIAL_MANAGEMENT.md)** - 🔐 AWS: Centralized credential management implementation
 - **[../AWS_CREDENTIAL_SYSTEM_STATUS.md](../AWS_CREDENTIAL_SYSTEM_STATUS.md)** - 🚀 STATUS: AWS credential system deployment guide
 - **[../AWS_SECURE_SETUP_GUIDE.md](../AWS_SECURE_SETUP_GUIDE.md)** - 🛡️ SETUP: Secure AWS configuration without CSV downloads
-- **[../GMAIL_OAUTH_SETUP.md](../GMAIL_OAUTH_SETUP.md)** - 😨 CRITICAL: Gmail OAuth configuration guide (DEPLOYMENT BLOCKED)
+- **[../GMAIL_OAUTH_SETUP.md](../GMAIL_OAUTH_SETUP.md)** - ✅ COMPLETE: Gmail OAuth configuration guide
+- **[../SECURE_API_KEY_GUIDE.md](../SECURE_API_KEY_GUIDE.md)** - 🔑 KEYS: GitHub Secrets and secure API key management
 - **[GITHUB_MCP_SERVER_SETUP.md](GITHUB_MCP_SERVER_SETUP.md)** - 🐙 MCP: GitHub Copilot MCP server enterprise setup
 - **[KILOCODE_ORCHESTRATOR_HANDOFF_REPORT.md](KILOCODE_ORCHESTRATOR_HANDOFF_REPORT.md)** - 🤖 HANDOFF: KiloCoder orchestrator transition report
+- **[../SECURE_API_KEY_GUIDE.md](../SECURE_API_KEY_GUIDE.md)** - 🔑 KEYS: GitHub Secrets and secure API key management
 
 ### 🤖 Automation & Compliance
 - **[../KILOCODER_COMPLIANCE_REPORT.md](../KILOCODER_COMPLIANCE_REPORT.md)** - 🤖 KILOCODER: Automated security compliance scan results
