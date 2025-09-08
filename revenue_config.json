@@ -1,0 +1,17 @@
+{
+  "pricing_tiers": {
+    "free": {
+      "price": 0,
+      "limit": 5
+    },
+    "pro": {
+      "price": 29.99,
+      "limit": -1
+    },
+    "enterprise": {
+      "price": 299.99,
+      "limit": -1
+    }
+  },
+  "payment_processor": "Stripe"
+}

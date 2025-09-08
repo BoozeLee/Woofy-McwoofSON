@@ -2,4 +2,6 @@ boto3  # For AWS if integrating
 pytest  # Testing
 flake8  # Linting
 black  # Formatting
+Flask
+gunicorn
 # Add your AI libs, e.g., pillow for images

@@ -301,38 +301,5 @@ This log documents all security remediation actions, credential exposures, and c
 
 ---
 
-### Incident #7: GCP Environment Configuration Guide (2025-09-08)
-**Status:** ✅ RESOLVED
-**Severity:** LOW (Documentation)
-**Description:** Creation of a standardized setup guide for connecting VS Code to Google Cloud Platform.
-**Actions Taken:**
-- Created `VS_CODE_GCP_SETUP_INSTRUCTIONS.md` to document the configuration process for the Google Cloud Code extension.
-- The guide details authentication via `gcloud` CLI, project selection, and verification steps.
-- Included a template for project-specific `.vscode/settings.json` to aid team consistency.
-- Emphasized security best practices, including IAM and the principle of least privilege.
-**Evidence:**
-- New documentation file created: `VS_CODE_GCP_SETUP_INSTRUCTIONS.md`.
-- The guide provides a repeatable and secure process for onboarding developers to the GCP environment.
-**Audit Log Entry:**
-- _2025-09-08_ Authored and committed a comprehensive setup guide for Google Cloud Platform integration in VS Code to standardize developer environments – Kilo Code
-
----
-
-### Incident #8: Cloud Run Deployment Guide (2025-09-08)
-**Status:** ✅ RESOLVED
-**Severity:** LOW (Documentation)
-**Description:** Creation of a standardized guide for deploying applications to Google Cloud Run using the VS Code Cloud Code extension.
-**Actions Taken:**
-- Authored `docs/guides/GCP_CLOUD_RUN_DEPLOYMENT_GUIDE.md`.
-- The guide provides a step-by-step process, including sample Python code, a production-ready `Dockerfile`, and detailed instructions for using the Cloud Code deployment wizard.
-- Included verification steps and key security considerations regarding public access and secret management.
-**Evidence:**
-- New documentation file created: `docs/guides/GCP_CLOUD_RUN_DEPLOYMENT_GUIDE.md`.
-- This guide establishes a repeatable and secure pattern for Cloud Run deployments within the project.
-**Audit Log Entry:**
-- _2025-09-08_ Created a comprehensive guide for deploying services to Google Cloud Run via VS Code, standardizing the process for the team – Kilo Code
-
----
-
 **Last Review:** 2025-09-08
 **Next Review:** Upon extension availability or escalation

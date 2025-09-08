@@ -1,0 +1,9 @@
+{
+  "dashboard_name": "WOOFY-Production",
+  "metrics": [
+    "Lambda invocations",
+    "DynamoDB usage",
+    "S3 storage",
+    "API Gateway requests"
+  ]
+}
