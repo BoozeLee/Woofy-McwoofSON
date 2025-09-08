@@ -4,4 +4,5 @@ flake8  # Linting
 black  # Formatting
 Flask
 gunicorn
+google-cloud-secret-manager # For accessing secrets
 # Add your AI libs, e.g., pillow for images

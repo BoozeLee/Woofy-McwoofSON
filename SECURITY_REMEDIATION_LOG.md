@@ -301,5 +301,90 @@ This log documents all security remediation actions, credential exposures, and c
 
 ---
 
+### Incident #7: GCP Environment Configuration Guide (2025-09-08)
+**Status:** ✅ RESOLVED
+**Severity:** LOW (Documentation)
+**Description:** Creation of a standardized setup guide for connecting VS Code to Google Cloud Platform.
+**Actions Taken:**
+- Created `VS_CODE_GCP_SETUP_INSTRUCTIONS.md` to document the configuration process for the Google Cloud Code extension.
+- The guide details authentication via `gcloud` CLI, project selection, and verification steps.
+- Included a template for project-specific `.vscode/settings.json` to aid team consistency.
+- Emphasized security best practices, including IAM and the principle of least privilege.
+**Evidence:**
+- New documentation file created: `VS_CODE_GCP_SETUP_INSTRUCTIONS.md`.
+- The guide provides a repeatable and secure process for onboarding developers to the GCP environment.
+**Audit Log Entry:**
+- _2025-09-08_ Authored and committed a comprehensive setup guide for Google Cloud Platform integration in VS Code to standardize developer environments – Kilo Code
+
+---
+
+### Incident #8: Cloud Run Deployment Guide (2025-09-08)
+**Status:** ✅ RESOLVED
+**Severity:** LOW (Documentation)
+**Description:** Creation of a standardized guide for deploying applications to Google Cloud Run using the VS Code Cloud Code extension.
+**Actions Taken:**
+- Authored `docs/guides/GCP_CLOUD_RUN_DEPLOYMENT_GUIDE.md`.
+- The guide provides a step-by-step process, including sample Python code, a production-ready `Dockerfile`, and detailed instructions for using the Cloud Code deployment wizard.
+- Included verification steps and key security considerations regarding public access and secret management.
+**Evidence:**
+- New documentation file created: `docs/guides/GCP_CLOUD_RUN_DEPLOYMENT_GUIDE.md`.
+- This guide establishes a repeatable and secure pattern for Cloud Run deployments within the project.
+**Audit Log Entry:**
+- _2025-09-08_ Created a comprehensive guide for deploying services to Google Cloud Run via VS Code, standardizing the process for the team – Kilo Code
+
+---
+
+### Incident #9: Dockerfile and Dependency Alignment for Cloud Run (2025-09-08)
+**Status:** ✅ RESOLVED
+**Severity:** LOW (Corrective Action)
+**Description:** Aligned the project's `Dockerfile` and `requirements.txt` with the newly created `GCP_CLOUD_RUN_DEPLOYMENT_GUIDE.md` to prepare for Python-based deployment.
+**Actions Taken:**
+- Replaced the existing Node.js `Dockerfile` with a production-ready Python/Gunicorn `Dockerfile`.
+- Corrected the `CMD` instruction in the Dockerfile to properly use the `$PORT` environment variable injected by Cloud Run.
+- Added `Flask` and `gunicorn` to `requirements.txt` to ensure all dependencies are installed during the container build.
+**Evidence:**
+- `Dockerfile` updated to support Python Flask application.
+- `requirements.txt` updated with necessary web server packages.
+- The project is now correctly configured for deployment to Google Cloud Run as per the guide.
+**Audit Log Entry:**
+- _2025-09-08_ Corrected Dockerfile and dependencies to align with Google Cloud Run deployment guide for Python services – Gemini Code Assist
+
+---
+
+### Incident #10: Secret Manager Integration Guide (2025-09-08)
+**Status:** ✅ RESOLVED
+**Severity:** LOW (Documentation)
+**Description:** Creation of a standardized guide for using Google Secret Manager with the VS Code Cloud Code extension to securely handle API keys.
+**Actions Taken:**
+- Authored `docs/guides/GCP_SECRET_MANAGER_GUIDE.md`.
+- The guide details the recommended method for Cloud Run: creating secrets via the VS Code UI and mounting them as environment variables during deployment.
+- It also provides an alternative code-based method for accessing secrets using the `google-cloud-secret-manager` client library.
+- Emphasized critical security steps, such as granting the `Secret Manager Secret Accessor` IAM role.
+- Added `google-cloud-secret-manager` to the project's `requirements.txt`.
+**Evidence:**
+- New documentation file created: `docs/guides/GCP_SECRET_MANAGER_GUIDE.md`.
+- `requirements.txt` updated with the necessary dependency.
+- This guide establishes a secure, repeatable pattern for secret management, reducing the risk of hardcoded credentials.
+**Audit Log Entry:**
+- _2025-09-08_ Authored a comprehensive guide for Google Secret Manager integration in VS Code to enforce secure credential handling practices – Kilo Code
+
+---
+
+### Incident #11: Perplexity API Key Setup Guide (2025-09-08)
+**Status:** ✅ RESOLVED
+**Severity:** LOW (Documentation)
+**Description:** Created a guide to address the common `"perplexityBot.apiKey" is not set` error in VS Code.
+**Actions Taken:**
+- Authored `docs/guides/VSCODE_PERPLEXITY_API_KEY_SETUP.md`.
+- The guide provides two methods for securely configuring the Perplexity API key: via the Settings UI and by editing `settings.json`.
+- Included security best practices, such as using User Settings to avoid committing personal keys to the repository.
+**Evidence:**
+- New documentation file created: `docs/guides/VSCODE_PERPLEXITY_API_KEY_SETUP.md`.
+- This guide provides a clear, repeatable solution for developers encountering this setup issue, improving the onboarding experience.
+**Audit Log Entry:**
+- _2025-09-08_ Authored a setup guide for the Perplexity VS Code extension to standardize API key configuration and enhance security awareness – Gemini Code Assist
+
+---
+
 **Last Review:** 2025-09-08
 **Next Review:** Upon extension availability or escalation
