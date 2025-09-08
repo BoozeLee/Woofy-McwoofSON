@@ -1,27 +1,20 @@
-# 🐾 HOW TO TEACH WOOFY NEW TRICKS
+# Contributing to Woofy-McWoofSON
 
-Thank you for helping WOOFY become the goodest enterprise AI assistant!
+Welcome to the amp rush! 🐕‍🦺⚡ Contribute with mischievous energy.
 
-## 🦴 Contributing Guide
+## How to Contribute
+1. Fork the repo.
+2. Create branch: `git checkout -b feature/atomic-swirl`
+3. Commit: `git commit -m "Add chaotic feature"`
+4. Push: `git push origin feature/atomic-swirl`
+5. Open PR—describe changes, tie to issues.
 
-1. **Sit!** – Fork the repo and clone it locally.
-2. **Fetch!** – Create a new branch:  
-   `git checkout -b feature/my-new-trick`
-3. **Roll Over!** – Commit changes and push:
-   `git push origin feature/my-new-trick`
-4. **Speak!** – Open a Pull Request.  
-   Describe your changes using dog puns if possible.
+## Code Style
+- Python: PEP8 (use black/flake8).
+- Tests: Add to tests/ dir.
 
-## 📝 Code Style
+## Security
+- No hardcode secrets.
+- Run scans before PR.
 
-- Follow the [Good Boy Code of Conduct](CODE_OF_CONDUCT.md)
-- All PRs require at least one review
-- Write tests for new features — WOOFY loves fetch!
-
-## 🐶 Need Help?
-
-Open an issue or bark in the Discussions tab!
-
----
-
-Keep it pawsitive! 🐕✨
+Join the party—unleash potentials!
