@@ -1,69 +1,61 @@
-# Woofy-McWoofSON: Amphetamine Psychedelic Atomic Dog Engine
+# Woofy-McWoofSON: Amphetamine Psychedelic Atomic Dog Engine – Round 2 Unleash
 
-Unleash the Psychedelic Beast! 🐕‍🦺🌪️⚡ – A Python-powered AI for chaotic swirly art, hidden narratives, and mischievous dark fun. Enterprise-ready with security, compliance, and revenue sprints.
+Round 2: 888% Amped! 🐕‍🦺⚡🌌 – Python AI for manic swirls, dark mischievous parties, rich chaotic fun. Enterprise-maxed with security, compliance, revenue rushes.
 
-## Vision
-Swirly chaos meets atomic rushes: Rebellion spirals, addiction unlocks artistic potentials in red-black-neon explosions. Revenue howls via NFTs, apps, partnerships.
+## Amp Vision
+Manic red-black-neon explosions: Hidden addiction narratives unlock rebellion spirals, artistic potentials in atomic highs. Revenue: NFT drops, API subs, biz partners.
 
-## Key Features
-- **Ultra-Psychedelic Generation**: Comic-book style prompts with wild energy.
-- **Enterprise Security**: Secret scanning, Dependabot, branch protection.
-- **CI/CD Automation**: GitHub Actions for tests/deploys.
-- **Monetization**: API subs, NFT drops, biz consulting.
+## Features (Now Live!)
+- **Psychedelic Gen**: Comic bursts with wild energy.
+- **Enterprise Security**: Dependabot, scans, branch protection.
+- **Automation**: GitHub Actions CI/CD.
+- **Monetization**: Sponsorships live, API tiers.
 
 ## Architecture
-- Python core (boto3 for AWS if needed).
-- Layers: AI Orchestrator (prompt gen), Security (scans), Monetization (Stripe hooks).
+- Python stack (boto3 for AWS).
+- Layers: AI Rush (prompts), Security Spiral (scans), Revenue Beast (Stripe).
 
 ## Quick Start
-### Prerequisites
-- Python 3.8+
-- GitHub PAT (personal access token)
-- pip install -r requirements.txt
+- Prereqs: Python 3.11+, GitHub PAT.
+- Install: `pip install -r requirements.txt`
+- Run: See usage snippet.
 
-### Installation
-1. Clone: `git clone https://github.com/BoozeLee/woofy-mcwoofson-enterprise.git`
-2. `cd woofy-mcwoofson-enterprise`
-3. Copy .env.example to .env and fill keys.
-4. `pip install -r requirements.txt`
-
-### Usage (Python Snippet)
+### Usage Snippet (Python)
 ```python
-import os  # Example amp-fueled generation
-def generate_atomic_dog(prompt):
-    print(f"Unleashing: {prompt} in red-black-neon chaos!")
-generate_atomic_dog("Amphetamine psychedelic atomic dog")
+def amp_atomic_dog(prompt: str) -> str:
+    """Unleash manic chaos!"""
+    return f"Generating: {prompt} in neon explosions! 🐶💊"
+print(amp_atomic_dog("Amphetamine psychedelic atomic dog"))
 ```
 
-## Business Opportunities
-- **Revenue Streams**: API ($5–$100/month tiers), NFTs (via OpenSea), Consulting ($500K+ deals).
-- **Targets**: Fortune 500, AI startups, gov agencies.
-- Sponsor us: Add GitHub Sponsors badge below.
+## Revenue Engines
+- **Tiers**: Free (10 gens/month), Pro ($20 unlimited + API), Enterprise ($100+ compliance).
+- **Streams**: NFTs (OpenSea), Consulting ($500K deals), Partners (30% share).
+- **Targets**: Fortune 500, AI scale-ups, gov/research.
 
 [![Sponsors](https://img.shields.io/github/sponsors/BoozeLee?style=social)](https://github.com/sponsors/BoozeLee)
 
-## Partnership Program
-- Benefits: 30% revenue share, co-marketing.
-- Requirements: 100+ GitHub stars, AI expertise.
+## Partnership Criteria
+- 100+ stars, AI expertise, ethical commitment.
 
 ## Security & Compliance
-- Scans: Dependabot enabled.
-- Standards: SOC 2 foundation, GDPR-ready.
-- Branch rules: PRs required.
+- Scans: Dependabot active.
+- Standards: SOC 2 base, GDPR.
+- Audits: Enable logs post-upgrade.
 
-## Documentation
-See Wiki for full lore.
+## Docs
+Wiki for lore; Discussions for ideas.
 
 ## Testing
-Run: `pytest tests/`
+`pytest tests/`
 
 ## Contributing
-See CONTRIBUTING.md. Fork, PR with atomic energy!
+See CONTRIBUTING.md – Join the rush!
 
 ## Contact
-DM @BoozeLeeAI or issues.
+@BoozeLeeAI or issues.
 
 ## License
-MIT – Free as an amp rush!
+MIT – Credit the pack!
 
-"Unleash the Psychedelic Beast" 💊🐶
+"Unleash the Psychedelic Beast" 🚀💥

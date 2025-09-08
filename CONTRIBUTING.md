@@ -1,20 +1,19 @@
-# Contributing to Woofy-McWoofSON
+# Contributing to Woofy-McWoofSON: Amp Rush Edition
 
-Welcome to the amp rush! 🐕‍🦺⚡ Contribute with mischievous energy.
+Join the manic party! 🐕‍🦺⚡ Contribute with dark chaotic energy.
 
-## How to Contribute
-1. Fork the repo.
-2. Create branch: `git checkout -b feature/atomic-swirl`
-3. Commit: `git commit -m "Add chaotic feature"`
-4. Push: `git push origin feature/atomic-swirl`
-5. Open PR—describe changes, tie to issues.
+## Guidelines
+1. Fork & branch: `git checkout -b amp-feature`
+2. Code: PEP8, add tests.
+3. Commit: `git commit -m "Add neon swirl"`
+4. PR: Describe, link issues/symbolism.
 
-## Code Style
-- Python: PEP8 (use black/flake8).
-- Tests: Add to tests/ dir.
+## Style
+- Python: Black/flake8.
+- Themes: Amp highs, doggo humor.
 
 ## Security
-- No hardcode secrets.
-- Run scans before PR.
+- No secrets; use .env.
+- Run scans pre-PR.
 
-Join the party—unleash potentials!
+Unlock potentials – revenue awaits!

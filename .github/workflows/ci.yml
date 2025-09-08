@@ -1,4 +1,4 @@
-name: Amp Rush CI
+name: Amp Rush CI Round 2
 
 on:
   push:
