@@ -1,0 +1,42 @@
+# 🐾 Example AWS API Gateway Configuration
+
+swagger: "2.0"
+info:
+  title: WOOFY McWOOFSON API
+  version: "1.0"
+paths:
+  /documents/fetch:
+    post:
+      summary: Fetch a document
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              document_id:
+                type: string
+      responses:
+        200:
+          description: Document fetched
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+
+  /security/scan:
+    post:
+      summary: Run a security scan
+      responses:
+        200:
+          description: Scan report
+        401:
+          description: Unauthorized
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header

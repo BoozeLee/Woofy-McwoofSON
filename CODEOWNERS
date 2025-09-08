@@ -1,0 +1,22 @@
+# 🐕 WOOFY McWOOFSON Code Ownership
+
+# Global ownership
+* @BoozeLee @amazon-q-enterprise
+
+# Security and compliance files
+SECURITY*.md @amazon-q-enterprise @security-team
+knowledge-vault/ @amazon-q-enterprise
+AUTO_MODE*.md @amazon-q-enterprise
+CHAIN_OF_COMMAND.md @BoozeLee
+
+# Enterprise documentation
+ENTERPRISE*.md @BoozeLee @amazon-q-enterprise
+*.yml @copilot-automation @amazon-q-enterprise
+
+# API and monetization
+api/ @amazon-q-enterprise @monetization-team
+plugins/ @amazon-q-enterprise
+
+# MCP Server and Integrations - KiloCoder Ownership
+/integrations/github-mcp-server/ @KiloCoder
+/integrations/ @KiloCoder

@@ -1,0 +1,49 @@
+name: "KiloCoder: Enterprise Repo Automation"
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  kilocoder-audit:
+    name: "KiloCoder Audit & Compliance Sweep"
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🦾 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🦾 Install dependencies
+        run: |
+          pip install detect-secrets markdown-toc
+
+      - name: 🦾 Scan for hardcoded secrets
+        run: |
+          detect-secrets scan --all-files > KILOCODER_SECRET_REPORT.txt
+
+      - name: 🦾 Validate .gitignore coverage
+        run: |
+          grep -E '\.env|api_keys\.json|secret|\.vault' .gitignore || echo "WARNING: .gitignore missing sensitive patterns." >> KILOCODER_COMPLIANCE_REPORT.md
+
+      - name: 🦾 Bulk update copyright/branding
+        run: |
+          find . -type f \( -name "*.md" -o -name "*.js" -o -name "*.py" \) -exec sed -i 's/Maintained by .*, 20../Maintained by BoozeLee, 2025-09-08/g' {} +
+
+      - name: 🦾 Auto-index Knowledge Vault
+        run: |
+          markdown-toc -i knowledge-vault/README.md
+
+      - name: 🦾 Generate Compliance Report
+        run: |
+          echo "# KiloCoder Compliance Report" > KILOCODER_COMPLIANCE_REPORT.md
+          echo "## Secret Scan Results" >> KILOCODER_COMPLIANCE_REPORT.md
+          cat KILOCODER_SECRET_REPORT.txt >> KILOCODER_COMPLIANCE_REPORT.md
+          echo "## .gitignore Audit" >> KILOCODER_COMPLIANCE_REPORT.md
+          grep -E '\.env|api_keys\.json|secret|\.vault' .gitignore >> KILOCODER_COMPLIANCE_REPORT.md || echo "Sensitive patterns missing!" >> KILOCODER_COMPLIANCE_REPORT.md
+
+      - name: 🦾 Commit and PR KiloCoder results
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "KiloCoder: Automated compliance, secret scan, and doc index update"
+          branch: kilocoder/auto-fixes
+          create_branch: true

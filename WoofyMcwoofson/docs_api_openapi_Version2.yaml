@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info:
+  title: Bakery Street Project API
+  version: "1.0.0"
+  description: |
+    🐶 Enterprise automation API.
+    Maintained by BoozeLee, 2025-09-08
+servers:
+  - url: https://api.bakerystreet.example.com/v1
+paths:
+  /woof:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Woof! 🐾 The API is live."
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []

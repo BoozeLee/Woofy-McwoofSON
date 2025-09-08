@@ -1,0 +1,29 @@
+# Core testing and quality
+flake8==7.0.0
+pytest==8.2.0
+pytest-cov==5.0.0
+coverage==7.5.0
+pip-audit==2.7.3
+
+# Web automation
+selenium>=4.15.0
+webdriver-manager>=4.0.0
+
+# AWS and cloud services
+boto3>=1.26.0
+
+# HTTP requests and APIs
+requests>=2.28.0
+
+# Environment management
+python-dotenv>=1.0.0
+
+# AI/ML APIs
+google-generativeai>=0.3.0
+groq>=0.31.1
+
+# Scheduling for key rotation
+schedule>=1.2.0
+
+# Data processing for security analytics
+pandas>=2.0.0

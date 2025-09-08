@@ -1,0 +1,59 @@
+name: "Woofy: Token & API Access Audit 🐶"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  token-access-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐾 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🐾 Print GitHub Token (should NOT print secret value)
+        run: |
+          if [ -z "${{ secrets.GITHUB_TOKEN }}" ]; then
+            echo "❌ GITHUB_TOKEN is NOT set!"
+            exit 1
+          else
+            echo "✅ GITHUB_TOKEN is set (value is hidden for security)."
+          fi
+
+      - name: 🐾 Test GitHub API Access (whoami)
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          resp=$(curl -s -H "Authorization: token $TOKEN" https://api.github.com/user)
+          login=$(echo "$resp" | grep '"login"' | head -1)
+          if [ -z "$login" ]; then
+            echo "❌ API access failed or insufficient token permissions."
+            echo "$resp"
+            exit 1
+          else
+            echo "✅ GitHub API token valid! $login"
+          fi
+
+      - name: 🐾 List repository collaborators (permission test)
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          resp=$(curl -s -H "Authorization: token $TOKEN" "https://api.github.com/repos/$REPO/collaborators")
+          if echo "$resp" | grep -q login; then
+            echo "✅ Collaborators listed, token has repo access."
+          else
+            echo "❌ Collaborator list failed. Check token scopes and repo permissions."
+            echo "$resp"
+            exit 1
+          fi
+
+      - name: 🐾 Check for environment variables (security check)
+        run: |
+          env | grep -i token || echo "ℹ️ No token-like environment variables found (expected in secure GitHub Actions context)."
+
+      - name: 🐾 Summary & Compliance Log
+        run: |
+          echo "Woofy: GitHub token access and permissions audited. See previous logs for details."

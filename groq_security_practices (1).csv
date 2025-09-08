@@ -1,0 +1,7 @@
+Practice,Implementation,Tools/Commands
+API Key Storage,Never hardcode in source code,"python-dotenv, .gitignore"
+Environment Variables,"Use .env files, GitHub Secrets",GROQ_API_KEY=your_key
+Key Rotation,Rotate keys quarterly,console.groq.com/keys
+Access Control,Team owner/developer roles only,GroqCloud Console permissions
+Usage Monitoring,"Dashboard monitoring, alerts",GroqCloud Dashboard
+Error Handling,Graceful error handling,"try/except blocks, exponential backoff"

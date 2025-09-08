@@ -1,0 +1,169 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'WOOFY McWOOFSON Serverless Infrastructure - Enterprise Grade'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: production
+    AllowedValues: [development, staging, production]
+  ProjectName:
+    Type: String
+    Default: woofy-mcwoofson
+
+Resources:
+  # Lambda Execution Role
+  WoofyExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-lambda-execution-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+
+  # Lambda Function
+  WoofyLambdaHandler:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${ProjectName}-handler'
+      Runtime: python3.11
+      Handler: lambda_woofy_handler.lambda_handler
+      Role: !GetAtt WoofyExecutionRole.Arn
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import logging
+          
+          logger = logging.getLogger()
+          logger.setLevel(logging.INFO)
+          
+          def lambda_handler(event, context):
+              """WOOFY McWOOFSON Lambda Handler"""
+              logger.info(f"Received event: {json.dumps(event)}")
+              
+              return {
+                  'statusCode': 200,
+                  'headers': {
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': '*'
+                  },
+                  'body': json.dumps({
+                      'message': 'WOOFY McWOOFSON is operational!',
+                      'status': 'success',
+                      'tail_wagging': True
+                  })
+              }
+      Environment:
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          PROJECT_NAME: !Ref ProjectName
+      Timeout: 30
+      MemorySize: 256
+
+  # API Gateway
+  WoofyAPIGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub '${ProjectName}-api'
+      Description: 'WOOFY McWOOFSON Enterprise API Gateway'
+
+  # API Gateway Resource
+  WoofyAPIResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref WoofyAPIGateway
+      ParentId: !GetAtt WoofyAPIGateway.RootResourceId
+      PathPart: 'woofy'
+
+  # API Gateway Method
+  WoofyAPIMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref WoofyAPIGateway
+      ResourceId: !Ref WoofyAPIResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${WoofyLambdaHandler.Arn}/invocations'
+
+  # Lambda Permission
+  WoofyLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref WoofyLambdaHandler
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WoofyAPIGateway}/*/*'
+
+  # API Gateway Deployment
+  WoofyAPIDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: WoofyAPIMethod
+    Properties:
+      RestApiId: !Ref WoofyAPIGateway
+      StageName: !Ref Environment
+
+  # DynamoDB Table
+  WoofyCredentialStore:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-credentials'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: service_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: service_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+
+  # S3 Bucket
+  WoofyDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${ProjectName}-data-${AWS::AccountId}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  # Secrets Manager
+  WoofyAPIKeysSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub '${ProjectName}/api-keys'
+      Description: 'WOOFY McWOOFSON API Keys'
+      SecretString: !Sub |
+        {
+          "grok_api_key": "placeholder-key",
+          "github_token": "placeholder-token",
+          "environment": "${Environment}"
+        }
+
+Outputs:
+  APIGatewayURL:
+    Description: 'WOOFY API Gateway URL'
+    Value: !Sub 'https://${WoofyAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/woofy'
+  
+  LambdaFunctionArn:
+    Description: 'WOOFY Lambda Function ARN'
+    Value: !GetAtt WoofyLambdaHandler.Arn

@@ -13,6 +13,8 @@ Please report it responsibly by emailing: [security@bakery-street-projct.com](ma
 - **GitHub secret scanning** enabled
 - **No PII stored unencrypted** (WOOFY rolls over sensitive data)
 - **AWS-native encryption** for all data at rest & transit
+- **AI Integration Security**: Environment-based credential management for Perplexity, IBM watsonx, and Google Gemini
+- **API Key Protection**: All AI service credentials loaded from secure environment variables
 
 ## 🕵️‍♂️ Compliance
 
@@ -25,3 +27,7 @@ Please report it responsibly by emailing: [security@bakery-street-projct.com](ma
 Meet our Security Good Boy 🏆: WOOFY McWOOFSON
 
 Stay safe, stay compliant, and always wag your tail! 🐾
+
+---
+
+**Maintained by BoozeLee, 2025-09-08**

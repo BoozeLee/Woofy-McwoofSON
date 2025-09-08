@@ -1,0 +1,26 @@
+name: Woofy Compliance
+
+on:
+  pull_request:
+  schedule:
+    - cron: "11 2 * * 1"
+
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout
+        uses: actions/checkout@v4
+      - name: 🔎 Basic structure check
+        run: |
+          test -f CHANGELOG.md
+          test -f LICENSE
+          test -d knowledge-vault
+          echo "Structure OK"
+      - name: ✅ Markdown scan (titles present)
+        run: |
+          missing=0
+          while IFS= read -r f; do
+            head -1 "$f" | grep -qi "#" || { echo "Missing title: $f"; missing=1; }
+          done < <(git ls-files '*.md')
+          exit $missing

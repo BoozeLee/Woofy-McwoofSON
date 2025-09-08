@@ -1,0 +1,9 @@
+Security Feature,Implementation,Security Rating,KiloCoder Integration
+Authentication Method,Bearer Token + OAuth PKCE,Very High,OAuth preferred for production
+Rate Limiting,Credit-based system (50+ free/day),High,Key rotation for rate limits
+Data Privacy,Opt-in logging only (1% discount),Very High,Disable logging for privacy
+Multi-Key Support,Multiple keys per account,High,Separate keys per use case
+API Key Rotation,Manual via dashboard,Medium,Automated rotation needed
+Usage Monitoring,Comprehensive usage tracking,Very High,Monitor all key usage
+Model Access Control,Per-key model restrictions,High,Restrict to needed models only
+Billing Security,One-time payment options,High,Controlled spending limits

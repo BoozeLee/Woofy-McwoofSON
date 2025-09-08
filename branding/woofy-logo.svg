@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <style>
+      .brand-text { font-family: 'Inter', sans-serif; font-weight: bold; }
+      .primary-blue { fill: #1E3A8A; }
+      .woofy-orange { fill: #F97316; }
+    </style>
+  </defs>
+  
+  <!-- Dog icon -->
+  <circle cx="25" cy="30" r="20" class="woofy-orange"/>
+  <circle cx="20" cy="25" r="3" class="primary-blue"/>
+  <circle cx="30" cy="25" r="3" class="primary-blue"/>
+  <path d="M15 35 Q25 40 35 35" stroke="#1E3A8A" stroke-width="2" fill="none"/>
+  
+  <!-- Text -->
+  <text x="55" y="25" class="brand-text primary-blue" font-size="16">WOOFY</text>
+  <text x="55" y="42" class="brand-text primary-blue" font-size="12">McWOOFSON</text>
+  
+  <!-- Subtitle -->
+  <text x="55" y="55" font-family="Inter" font-size="8" fill="#6B7280">Enterprise AI Assistant</text>
+</svg>

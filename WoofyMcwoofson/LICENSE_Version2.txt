@@ -1,0 +1,8 @@
+Copyright (c) 2025 BoozeLee.
+
+All rights reserved.
+
+This software and documentation is the exclusive property of BoozeLee and contributors to the "PERPLEXITY LABS - AUTOMATION APIs MAXIMIZED FRAMEWORK".  
+No part of this project may be copied, distributed, or used for commercial purposes without express written permission from the owners.
+
+For licensing inquiries, contact BoozeLee via the repository.

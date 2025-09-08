@@ -1,0 +1,9 @@
+Security Domain,Critical Actions,Perplexity Specific,OpenRouter Specific,Priority Level
+API Key Storage,Environment variables + KMS,Bearer token in .env,OAuth PKCE for production,Critical
+Access Control,Least privilege permissions,Tier-appropriate rate limits,Multiple key rotation,Critical
+Network Security,HTTPS only + IP restrictions,Disable prompt logging,Opt-out data logging,High
+Monitoring & Logging,Real-time usage tracking,Monitor usage dashboard,Multi-key usage tracking,High
+Incident Response,Automated key revocation,Manual key regeneration,Automated key cycling,High
+Compliance & Audit,SOC 2 compliance validation,SOC 2 Type II verified,Privacy policy compliance,Medium
+Development Practices,Secrets scanning in CI/CD,Pre-commit hooks,Key-per-environment,High
+Production Deployment,Zero-downtime key rotation,Blue-green deployment,Load balancer integration,Critical

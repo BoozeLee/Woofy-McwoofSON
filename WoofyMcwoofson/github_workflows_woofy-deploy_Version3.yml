@@ -1,0 +1,29 @@
+name: Woofy Deploy (Placeholder)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout
+        uses: actions/checkout@v4
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 🔧 Build artifact
+        run: |
+          mkdir -p dist
+          tar -czf dist/woofy-${GITHUB_REF_NAME}.tar.gz .
+      - name: 📤 Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: woofy-${{ github.ref_name }}
+          path: dist/woofy-${{ github.ref_name }}.tar.gz
+      - name: 📄 Note
+        run: echo "Add real deployment steps after credential rotation."

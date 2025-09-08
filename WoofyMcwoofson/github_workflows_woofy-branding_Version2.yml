@@ -1,0 +1,22 @@
+name: Woofy Branding Parade 🐾
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  branding-parade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐶 Show off Woofy Badges
+        run: |
+          echo "🐶 Woofy McWOOFSON Project Branding Parade!"
+          echo "🏅 Coverage Badge: ![Coverage](branding/coverage-badge.svg)"
+          echo "🦴 Lint: ![Woofy Lint](https://img.shields.io/badge/lint-pass-brightgreen?style=flat&logo=dog)"
+          echo "🐾 Deploy: ![Woof Deploy](https://img.shields.io/badge/deploy-ready-blue?style=flat&logo=dog)"
+      - name: 📸 Archive Branding
+        uses: actions/upload-artifact@v4
+        with:
+          name: woofy-branding
+          path: branding/

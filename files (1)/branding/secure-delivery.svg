@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="40">
+  <rect width="144" height="40" rx="10" fill="#e9ffe6"/>
+  <g>
+    <circle cx="28" cy="20" r="14" fill="#6ee7b7" stroke="#22c55e" stroke-width="2"/>
+    <path d="M22 20 l6 6 l8-10" stroke="#166534" stroke-width="2.5" fill="none"/>
+  </g>
+  <text x="54" y="25" font-size="18" fill="#166534" font-family="Verdana" font-weight="bold">Secure Delivery</text>
+</svg>

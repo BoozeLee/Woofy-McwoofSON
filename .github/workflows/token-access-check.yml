@@ -1,0 +1,33 @@
+name: "Woofy: Token & API Access Audit 🐶"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  token-access-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐾 Checkout code
+        uses: actions/checkout@v3
+      - name: 🐾 Check for GITHUB_TOKEN
+        run: |
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo "❌ GITHUB_TOKEN is not set!" && exit 1
+          else
+            echo "✅ GITHUB_TOKEN is set."
+          fi
+      - name: 🐾 GitHub API call (list repo collaborators)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO="${{ github.repository }}"
+          curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/$REPO/collaborators" | head -c 500
+      - name: 🐾 Scan environment for token variables
+        run: |
+          printenv | grep -i token || echo "No token variables found."
+      - name: 🐾 Audit summary
+        run: |
+          echo "Token access and API audit complete. See above for results."

@@ -1,0 +1,22 @@
+name: GitHub Token Rotation Reminder 🐶
+
+on:
+  schedule:
+    - cron: "0 8 1 * *"   # 08:00 UTC on the 1st each month
+  workflow_dispatch:
+
+jobs:
+  rotation-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reminder Notice
+        run: |
+          echo "🔐 GitHub Token Rotation Reminder"
+          echo "1. Generate new fine-grained PAT (min scopes, 90-day)."
+          echo "2. Update repository secret(s)."
+          echo "3. Revoke old token."
+          echo "4. Log rotation in:"
+          echo "   - knowledge-vault/CREDENTIAL_ROTATION_AND_HISTORY_CLEANUP.md"
+          echo "   - SECURITY_REMEDIATION_LOG.md"
+          echo "5. Re-run token-access-check workflow to validate."
+          echo "Do NOT store tokens locally beyond secure password manager."

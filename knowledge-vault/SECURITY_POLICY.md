@@ -78,6 +78,13 @@
 - Incident detection and alerting
 - Security awareness training
 
+## 🔒 Logging Policy (2025-01-27 Update)
+- **Sensitive data (credentials, API keys, tokens, passwords) must never be logged, written to logs, or output to persistent storage.**
+- **Any log file found to contain sensitive data must be immediately deleted and reported as a critical incident.**
+- **All logs containing sensitive data must be purged within 2 days of creation.**
+- **After any incident, all affected credentials must be rotated and a full incident report added to the security remediation log.**
+- **Regularly audit extension/plugin logs (e.g., Amazon Q, Copilot, etc.) for compliance.**
+
 ---
 **Remember:** Security is everyone's responsibility! 🐾  
 **Contact:** security@bakery-street-projct.com

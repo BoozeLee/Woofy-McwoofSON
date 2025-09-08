@@ -1,0 +1,34 @@
+openapi: 3.1.0
+info:
+  title: Bakery Street Project API
+  version: '1.0.0'
+  description: |
+    🐶 The Bakery Street Project API enables secure, enterprise-grade automation and integrations.
+    All endpoints require authentication and comply with project security standards.
+    Maintained by BoozeLee, 2025-09-08
+servers:
+  - url: https://api.bakerystreet.example.com/v1
+paths:
+  /woof:
+    get:
+      summary: Dog-themed health check
+      description: Returns a friendly woof if the API is running.
+      responses:
+        '200':
+          description: Woof response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Woof! 🐾 The API is live."
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []

@@ -1,0 +1,6 @@
+Extension,Publisher,Models Supported,Key Features,Installation
+Groqopilot,Unclecode,"Llama3.1 series, 405B","File & URL attachments, Contextual",marketplace.visualstudio.com
+Groq Code Copilot,sohammhatre521,Multiple Groq models,"Interactive assistance, Q&A",VS Code Marketplace
+Groq Code Completion,MaximeRivest,Lightning-fast inference,AI-powered completions,VS Code Marketplace
+codebuddy-groq,SaiSahanTalabattula,llama3-8b-8192,Direct API integration,Manual installation
+CodeGPT with Groq,CodeGPT Team,All Groq models,"Code explanation, Documentation",VS Code Marketplace

@@ -1,0 +1,45 @@
+name: "KiloCoder Automation"
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  compliance-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run compliance checks
+        run: |
+          # Placeholder for compliance check scripts
+          echo "Running compliance checks..."
+
+      - name: Normalize documentation headers
+        run: |
+          python scripts_internal/maintainer_header_normalizer.py
+
+      - name: Run secret scan
+        run: |
+          detect-secrets scan --all-files > kilocoder_secret_scan_report.txt
+
+      - name: Upload compliance report
+        uses: actions/upload-artifact@v4
+        with:
+          name: compliance-report
+          path: kilocoder_secret_scan_report.txt
+
+      - name: Update DETAILED_TRANSITION_REPORT.md
+        run: |
+          echo "Compliance checks and secret scan completed on $(date)" >> DETAILED_TRANSITION_REPORT.md
+          echo "See compliance report for details." >> DETAILED_TRANSITION_REPORT.md

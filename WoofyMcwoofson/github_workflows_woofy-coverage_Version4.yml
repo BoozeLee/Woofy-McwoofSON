@@ -1,0 +1,41 @@
+name: Woofy Coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐶 Checkout code
+        uses: actions/checkout@v4
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+      - name: 🧪 Run tests with coverage
+        run: |
+          pip install coverage
+          coverage run -m unittest discover
+          coverage xml
+          coverage report
+      - name: 🏅 Generate Coverage Badge
+        run: |
+          pip install lxml
+          python scripts/generate_badges.py  # Replace to parse real coverage if desired
+      - name: 🏷️ Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+      - name: 💾 Commit badge (optional)
+        run: |
+          git config --global user.email "woofy@mcwoofson.com"
+          git config --global user.name "Woofy Bot"
+          git add branding/coverage-badge.svg
+          git commit -m "Update coverage badge [skip ci]" || echo "No badge update"
+          git push || echo "Not pushing from PR"

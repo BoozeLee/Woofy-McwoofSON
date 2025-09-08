@@ -1,0 +1,7 @@
+Rate Limiting Strategy,Use Case,Perplexity Fit,OpenRouter Fit,Implementation Priority
+Fixed Window,Simple quotas,Basic tier management,Credit-based limits,Medium
+Sliding Window,Smooth traffic distribution,Ideal for research queries,Multi-model balancing,High
+Token Bucket,Burst handling,Handle burst requests,Free tier management,High
+Leaky Bucket,Steady flow control,Steady AI processing,Consistent inference,Medium
+Exponential Backoff,Retry logic,Required for API calls,Key rotation triggers,Critical
+Circuit Breaker,Failure protection,Protect against failures,Model failover,High

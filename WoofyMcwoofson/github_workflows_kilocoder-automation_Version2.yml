@@ -1,0 +1,53 @@
+name: KiloCoder Automation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+  pull_request:
+    types: [opened, synchronize, labeled]
+
+jobs:
+  kilocoder:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'kilocoder')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt || true
+      - name: Run KiloCoder scan + docs/index/compliance
+        run: |
+          python scripts/kilocoder_main.py
+      - name: Commit automation changes
+        run: |
+          git config user.name "kilocoder-bot"
+          git config user.email "kilocoder-bot@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add .
+            git commit -m "chore(kilocoder): automated scan + doc index + compliance report"
+          fi
+      - name: Open / Update PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: chore/kilocoder-automation
+          title: "KiloCoder Automation Output"
+          body: |
+            Automated changes:
+            - Secret/deprecated pattern scan results
+            - Maintainer header normalization
+            - Knowledge Vault index refresh
+            - Compliance report
+            - Proposed .gitignore additions
+            Review SECURITY_REMEDIATION_LOG.md & DETAILED_TRANSITION_REPORT.md updates.
+          draft: false

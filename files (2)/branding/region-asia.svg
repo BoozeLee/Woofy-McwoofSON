@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="40">
+  <rect width="140" height="40" rx="10" fill="#fef9c3"/>
+  <g>
+    <circle cx="30" cy="20" r="14" fill="#fde047"/>
+    <text x="19" y="25" font-size="14" fill="#fff" font-weight="bold">ASIA</text>
+  </g>
+  <text x="54" y="25" font-size="18" fill="#fbbf24" font-family="Verdana" font-weight="bold">Asia Compliant</text>
+</svg>

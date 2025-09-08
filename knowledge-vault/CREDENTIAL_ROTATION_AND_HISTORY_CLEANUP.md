@@ -90,6 +90,7 @@ git filter-branch --force --index-filter \
 ### Mandatory Rotation Intervals
 - **AWS Access Keys:** Every 90 days
 - **API Keys:** Every 90 days
+- **AI Service Tokens (Perplexity, watsonx, Gemini):** Every 90 days
 - **Database Passwords:** Every 180 days
 - **Service Account Tokens:** Every 30 days
 
@@ -125,6 +126,15 @@ jobs:
           # Automated rotation script
           ./scripts/rotate-aws-credentials.sh
 ```
+
+## 📋 AUDIT LOG
+
+- _2025-09-07_ Set up secure credential management for new AI integrations (Perplexity, IBM watsonx, Google Gemini); created comprehensive .env template with placeholders; implemented environment-based credential loading; updated rotation schedule for AI services; verified .gitignore protection – Kilo Code
+- _2025-01-27_ Rotated Amazon Q, Gmail, Discord, GitHub, Stripe credentials after log file exposure; scrubbed repo history; updated all `.env` files and notified all agents – Kilo Code
+
+---
+
+_Fill in new entries for each rotation event. Escalate if any secrets are found exposed or if rotation cannot be completed._
 
 ---
 **🚨 CRITICAL:** Never commit real credentials to version control!  

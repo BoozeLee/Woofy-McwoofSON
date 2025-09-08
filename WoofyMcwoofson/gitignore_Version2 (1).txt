@@ -1,0 +1,60 @@
+# Node, Python, and sensitive files
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.env.*
+.venv/
+*.egg-info/
+dist/
+build/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Sensitive/Secrets
+*.env
+*.env.*
+api_keys.json
+Tracing/
+secrets.*
+secret.*
+.vault/
+*.pem
+*.key
+*.crt
+*.p12
+*.db
+
+# Copilot & VSCode
+copilot.json
+.vscode/
+*.swp
+
+# Logs
+*.log
+logs/
+*.gz
+
+# Archive
+archive/
+
+# Misc
+*.bak
+*.tmp
+*.old
+*.orig
+*~
+
+# Exclude Knowledge Vault backup and temp files
+knowledge-vault/*_backup*
+knowledge-vault/*_old*
