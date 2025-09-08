@@ -1,0 +1,65 @@
+{
+  "personal_profile": {
+    "name": "Booze Lee",
+    "company": "Bakery Street Project",
+    "location": "Amsterdam, Netherlands",
+    "email": "kiliaanv2@gmail.com",
+    "website": "https://bakery-street-projct.github.io",
+    "twitter": "BoozeLeeAI",
+    "bio": "🐕‍🦺 Atomic Dog Dev: Unleashing chaotic psychedelic code parties. Seeking biz partners for revenue howls—DM for collabs! #WoofyMcWoofSON",
+    "avatar_description": "Swirling psychedelic atomic dog (red-black-neon, comic-book style)",
+    "pinned_repos": [
+      "woofy-mcwoofson-enterprise",
+      "ai-development-framework",
+      "neuromorphic-psychedelic-ai"
+    ]
+  },
+  "organization_profile": {
+    "name": "Bakery Street Project",
+    "description": "🐕‍🦺 Bakery Street Projct: Where psychedelic dogs bake revenue pies. Chaotic code, mischievous partnerships—join the party for atomic biz ops!",
+    "website": "https://bakery-street-projct.github.io",
+    "email": "contact@bakery-street-projct.com",
+    "location": "Swirly Nebula, Amsterdam",
+    "logo_description": "Psychedelic bakery-dog fusion (swirly oven baking atomic treats—rich, dark fun)",
+    "repositories": [
+      "woofy-mcwoofson-enterprise",
+      "bakery-street-laboratory",
+      "ai-development-framework"
+    ]
+  },
+  "enterprise_features": {
+    "billing_plan": "Team/Enterprise (recommended for advanced security)",
+    "security_features": [
+      "Secret scanning",
+      "Dependency alerts",
+      "Code scanning",
+      "Branch protection rules"
+    ],
+    "collaboration_features": [
+      "Projects (kanban boards)",
+      "Discussions",
+      "Wiki",
+      "GitHub Pages"
+    ]
+  },
+  "business_config": {
+    "revenue_streams": [
+      "Enterprise AI consulting ($500K+ per implementation)",
+      "API monetization (subscription-based)",
+      "NFT marketplace (digital art sales)",
+      "Partnership commissions (30% revenue share)"
+    ],
+    "target_markets": [
+      "Fortune 500 companies",
+      "AI startups",
+      "Research institutions",
+      "Government agencies"
+    ],
+    "partnership_criteria": [
+      "Active GitHub presence (100+ stars)",
+      "Demonstrated AI/ML expertise",
+      "Commitment to ethical AI",
+      "Revenue-sharing agreement"
+    ]
+  }
+}

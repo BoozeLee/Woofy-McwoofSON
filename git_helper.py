@@ -7,7 +7,7 @@ class GitHelper:
     def __init__(self):
         self.secrets_client = boto3.client('secretsmanager', region_name='us-east-1')
         self.github_token = None
-        self.repo_url = "https://github.com/BoozeLee/woofy-mcwoofson-enterprise.git"
+        self.repo_url = "https://github.com/Bakery-street-projct/Woofy-McwoofSON.git"
     
     def get_github_token(self):
         response = self.secrets_client.get_secret_value(SecretId='github-oauth-secret')
