@@ -1,0 +1,39 @@
+import boto3
+import requests
+import json
+
+def test_github_token():
+    # Get GitHub token
+    secrets_client = boto3.client('secretsmanager', region_name='us-east-1')
+    response = secrets_client.get_secret_value(SecretId='github-oauth-secret')
+    secret = json.loads(response['SecretString'])
+    github_token = secret['client_secret']
+    
+    print(f"Token starts with: {github_token[:10]}...")
+    
+    headers = {
+        'Authorization': f'token {github_token}',
+        'Accept': 'application/vnd.github.v3+json'
+    }
+    
+    # Test token by getting user info
+    response = requests.get('https://api.github.com/user', headers=headers)
+    
+    if response.status_code == 200:
+        user = response.json()
+        print(f"SUCCESS: Token works!")
+        print(f"Username: {user['login']}")
+        print(f"Name: {user.get('name', 'Not set')}")
+        
+        # Check token scopes
+        scopes = response.headers.get('X-OAuth-Scopes', 'No scopes found')
+        print(f"Token scopes: {scopes}")
+        
+        return True
+    else:
+        print(f"ERROR: Token test failed - {response.status_code}")
+        print(response.text)
+        return False
+
+if __name__ == "__main__":
+    test_github_token()

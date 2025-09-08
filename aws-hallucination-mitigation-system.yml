@@ -72,7 +72,8 @@ Resources:
               
               if hallucination_score > 0.7:
                   # Store in DynamoDB
-                  table = dynamodb.Table('woofy-mitigation-hallucination-tracking')
+                  import os
+                  table = dynamodb.Table(os.environ['TABLE_NAME'])
                   table.put_item(Item={
                       'request_id': context.aws_request_id,
                       'timestamp': datetime.utcnow().isoformat(),
@@ -82,7 +83,7 @@ Resources:
                   
                   # Send alert
                   sns.publish(
-                      TopicArn='arn:aws:sns:us-east-1:123456789012:woofy-mitigation-alerts',
+                      TopicArn=os.environ['TOPIC_ARN'],
                       Message=f'High hallucination detected: {hallucination_score}',
                       Subject='Hallucination Alert'
                   )
