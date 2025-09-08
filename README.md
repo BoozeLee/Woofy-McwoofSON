@@ -50,6 +50,12 @@
 - **Enterprise Sales**: enterprise@woofymcwoofson.com
 - **Custom Development**: dev@woofymcwoofson.com
 
+### 🎉 **Support the Revolution**
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-Revolution-orange?style=for-the-badge&logo=github)](https://github.com/sponsors/Bakery-street-projct)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20us%20a%20bone-ff5f5f?style=for-the-badge&logo=ko-fi)](https://ko-fi.com/atomicdoggo)
+
+**Your sponsorship fuels the psychedelic innovation engine!** Every contribution accelerates our mission to revolutionize AI through atomic creativity and enterprise-grade reliability.
+
 ---
 
 ## 🏗️ Repository Structure
