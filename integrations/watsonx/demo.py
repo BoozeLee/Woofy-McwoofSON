@@ -17,6 +17,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from watsonx_client import WatsonxClient
 
+
 def main():
     """
     Demo function showing watsonx client usage.
@@ -45,8 +46,8 @@ def main():
         print("✅ Response received successfully!")
 
         # Print a summary
-        if 'results' in response and response['results']:
-            content = response['results'][0].get('generated_text', '')
+        if "results" in response and response["results"]:
+            content = response["results"][0].get("generated_text", "")
             preview = content[:200] + "..." if len(content) > 200 else content
             print(f"📄 Generated text: {preview}")
         else:
@@ -58,11 +59,14 @@ def main():
 
     except ValueError as e:
         print(f"❌ Configuration Error: {str(e)}")
-        print("💡 Please ensure WATSONX_API_KEY and WATSONX_PROJECT_ID are set in your .env file")
+        print(
+            "💡 Please ensure WATSONX_API_KEY and WATSONX_PROJECT_ID are set in your .env file"
+        )
         print("📞 Contact IBM to obtain watsonx credentials")
     except Exception as e:
         print(f"❌ Demo failed: {str(e)}")
         print("🔧 This may be due to API endpoint changes or credential issues")
+
 
 def test_credentials():
     """
@@ -70,8 +74,8 @@ def test_credentials():
     """
     print("\n🔍 Testing watsonx credentials...")
 
-    api_key = os.getenv('WATSONX_API_KEY')
-    project_id = os.getenv('WATSONX_PROJECT_ID')
+    api_key = os.getenv("WATSONX_API_KEY")
+    project_id = os.getenv("WATSONX_PROJECT_ID")
 
     if api_key:
         print("✅ WATSONX_API_KEY is set")
@@ -87,6 +91,7 @@ def test_credentials():
         print("🎯 Credentials appear to be configured correctly")
     else:
         print("⚠️  Credentials need to be configured before using watsonx integration")
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--test-credentials":

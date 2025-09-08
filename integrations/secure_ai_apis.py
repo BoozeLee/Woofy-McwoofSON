@@ -23,16 +23,16 @@ load_dotenv()
 # Configure secure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('security.log'),
-        logging.StreamHandler()
-    ]
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("security.log"), logging.StreamHandler()],
 )
+
 
 class SecurityError(Exception):
     """Custom security exception for API protection"""
+
     pass
+
 
 class SecurePerplexityClient:
     """Ultra-secure Perplexity API client with full protection"""
@@ -41,12 +41,14 @@ class SecurePerplexityClient:
         self.api_key = self._validate_api_key()
         self.base_url = "https://api.perplexity.ai/chat/completions"
         self.model = os.getenv("PERPLEXITY_MODEL", "llama-3.1-sonar-huge-128k-online")
-        self.max_requests_per_minute = int(os.getenv("PERPLEXITY_MAX_REQUESTS_PER_MINUTE", "60"))
+        self.max_requests_per_minute = int(
+            os.getenv("PERPLEXITY_MAX_REQUESTS_PER_MINUTE", "60")
+        )
 
         # Security monitoring
         self.request_history = []
         self.security_events = []
-        self.logger = logging.getLogger('SecurePerplexity')
+        self.logger = logging.getLogger("SecurePerplexity")
 
     def _validate_api_key(self) -> str:
         """Validate API key format and existence"""
@@ -69,16 +71,22 @@ class SecurePerplexityClient:
         minute_ago = now - timedelta(minutes=1)
 
         # Clean old requests
-        self.request_history = [req_time for req_time in self.request_history if req_time > minute_ago]
+        self.request_history = [
+            req_time for req_time in self.request_history if req_time > minute_ago
+        ]
 
         # Check if we're within limits
         if len(self.request_history) >= self.max_requests_per_minute:
-            self.security_events.append({
-                "event": "rate_limit_approached",
-                "timestamp": now,
-                "requests_in_minute": len(self.request_history)
-            })
-            self.logger.warning(f"Rate limit approached: {len(self.request_history)} requests/minute")
+            self.security_events.append(
+                {
+                    "event": "rate_limit_approached",
+                    "timestamp": now,
+                    "requests_in_minute": len(self.request_history),
+                }
+            )
+            self.logger.warning(
+                f"Rate limit approached: {len(self.request_history)} requests/minute"
+            )
             return False
 
         return True
@@ -101,7 +109,7 @@ class SecurePerplexityClient:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "User-Agent": "KiloCoder-SecureClient/1.0"
+            "User-Agent": "KiloCoder-SecureClient/1.0",
         }
 
         payload = {
@@ -109,23 +117,17 @@ class SecurePerplexityClient:
             "messages": [
                 {
                     "role": "system",
-                    "content": "You are a secure research assistant. Always provide citations and verify information."
+                    "content": "You are a secure research assistant. Always provide citations and verify information.",
                 },
-                {
-                    "role": "user",
-                    "content": secure_prompt
-                }
+                {"role": "user", "content": secure_prompt},
             ],
             "temperature": 0.1,  # Low for factual accuracy
-            "max_tokens": 2000
+            "max_tokens": 2000,
         }
 
         try:
             response = requests.post(
-                self.base_url,
-                headers=headers,
-                json=payload,
-                timeout=30
+                self.base_url, headers=headers, json=payload, timeout=30
             )
 
             # Record successful request
@@ -136,26 +138,33 @@ class SecurePerplexityClient:
                     "success": True,
                     "content": response.json()["choices"][0]["message"]["content"],
                     "usage": response.json().get("usage", {}),
-                    "timestamp": datetime.now().isoformat()
+                    "timestamp": datetime.now().isoformat(),
                 }
-                self.logger.info(f"Perplexity research successful: {len(result['content'])} chars")
+                self.logger.info(
+                    f"Perplexity research successful: {len(result['content'])} chars"
+                )
                 return result
             else:
-                self.security_events.append({
-                    "event": "api_error",
-                    "status_code": response.status_code,
-                    "timestamp": datetime.now()
-                })
+                self.security_events.append(
+                    {
+                        "event": "api_error",
+                        "status_code": response.status_code,
+                        "timestamp": datetime.now(),
+                    }
+                )
                 raise SecurityError(f"API request failed: {response.status_code}")
 
         except Exception as e:
-            self.security_events.append({
-                "event": "request_failure",
-                "error": str(e),
-                "timestamp": datetime.now()
-            })
+            self.security_events.append(
+                {
+                    "event": "request_failure",
+                    "error": str(e),
+                    "timestamp": datetime.now(),
+                }
+            )
             self.logger.error(f"Perplexity request failed: {str(e)}")
             raise SecurityError(f"Secure request failed: {str(e)}")
+
 
 class SecureOpenRouterClient:
     """Ultra-secure OpenRouter client with key rotation"""
@@ -165,12 +174,17 @@ class SecureOpenRouterClient:
         self.base_url = "https://openrouter.ai/api/v1/chat/completions"
         self.current_key_index = 0
         self.preferred_models = os.getenv("OPENROUTER_PREFERRED_MODELS", "").split(",")
-        self.data_logging = os.getenv("OPENROUTER_DATA_LOGGING", "false").lower() == "true"
+        self.data_logging = (
+            os.getenv("OPENROUTER_DATA_LOGGING", "false").lower() == "true"
+        )
 
         # Key rotation tracking
-        self.key_usage = {key: {"requests": 0, "errors": 0, "last_used": None} for key in self.api_keys}
+        self.key_usage = {
+            key: {"requests": 0, "errors": 0, "last_used": None}
+            for key in self.api_keys
+        }
         self.security_events = []
-        self.logger = logging.getLogger('SecureOpenRouter')
+        self.logger = logging.getLogger("SecureOpenRouter")
 
     def _load_api_keys(self) -> List[str]:
         """Load and validate multiple API keys"""
@@ -197,7 +211,7 @@ class SecureOpenRouterClient:
         """Intelligent key rotation with health checking"""
         # Find the healthiest key (least errors, oldest last use)
         best_key = None
-        best_score = float('inf')
+        best_score = float("inf")
 
         for i, key in enumerate(self.api_keys):
             usage = self.key_usage[key]
@@ -229,7 +243,7 @@ class SecureOpenRouterClient:
                     raise e
 
                 # Exponential backoff with jitter
-                wait_time = (2 ** attempt) + random.uniform(0, 1)
+                wait_time = (2**attempt) + random.uniform(0, 1)
                 time.sleep(wait_time)
 
                 # Try next key on failure
@@ -247,7 +261,7 @@ class SecureOpenRouterClient:
         headers = {
             "Authorization": f"Bearer {current_key}",
             "Content-Type": "application/json",
-            "User-Agent": "KiloCoder-SecureClient/1.0"
+            "User-Agent": "KiloCoder-SecureClient/1.0",
         }
 
         # Use preferred model if not specified
@@ -258,7 +272,7 @@ class SecureOpenRouterClient:
             "model": model or "anthropic/claude-3.5-sonnet",
             "messages": messages,
             "temperature": 0.7,
-            "max_tokens": 2000
+            "max_tokens": 2000,
         }
 
         # Critical privacy setting
@@ -267,18 +281,17 @@ class SecureOpenRouterClient:
 
         def make_request():
             response = requests.post(
-                self.base_url,
-                headers=headers,
-                json=payload,
-                timeout=60
+                self.base_url, headers=headers, json=payload, timeout=60
             )
 
             if response.status_code == 429:  # Rate limited
-                self.security_events.append({
-                    "event": "rate_limited",
-                    "key_index": self.current_key_index,
-                    "timestamp": datetime.now()
-                })
+                self.security_events.append(
+                    {
+                        "event": "rate_limited",
+                        "key_index": self.current_key_index,
+                        "timestamp": datetime.now(),
+                    }
+                )
                 raise Exception("Rate limited - rotating key")
 
             if response.status_code == 200:
@@ -287,12 +300,13 @@ class SecureOpenRouterClient:
                     "content": response.json()["choices"][0]["message"]["content"],
                     "model": response.json().get("model"),
                     "usage": response.json().get("usage", {}),
-                    "timestamp": datetime.now().isoformat()
+                    "timestamp": datetime.now().isoformat(),
                 }
             else:
                 raise Exception(f"API request failed: {response.status_code}")
 
         return self._exponential_backoff_retry(make_request)
+
 
 class KiloCoderSecureAI:
     """Complete secure AI integration for KiloCoder"""
@@ -301,9 +315,11 @@ class KiloCoderSecureAI:
         self.perplexity = SecurePerplexityClient()
         self.openrouter = SecureOpenRouterClient()
         self.security_log = []
-        self.logger = logging.getLogger('KiloCoderSecureAI')
+        self.logger = logging.getLogger("KiloCoderSecureAI")
 
-    def secure_research_and_generate(self, research_query: str, generation_prompt: str) -> Dict:
+    def secure_research_and_generate(
+        self, research_query: str, generation_prompt: str
+    ) -> Dict:
         """Combined research and generation with full security"""
         try:
             # Step 1: Secure research with Perplexity
@@ -313,12 +329,12 @@ class KiloCoderSecureAI:
             messages = [
                 {
                     "role": "system",
-                    "content": "You are KiloCoder's secure AI assistant. Use the provided research to generate accurate, helpful responses."
+                    "content": "You are KiloCoder's secure AI assistant. Use the provided research to generate accurate, helpful responses.",
                 },
                 {
                     "role": "user",
-                    "content": f"Based on this research: {research_result['content']}\n\nGenerate: {generation_prompt}"
-                }
+                    "content": f"Based on this research: {research_result['content']}\n\nGenerate: {generation_prompt}",
+                },
             ]
 
             generation_result = self.openrouter.generate(messages)
@@ -329,26 +345,30 @@ class KiloCoderSecureAI:
                 "research": research_result,
                 "generation": generation_result,
                 "security_status": "PROTECTED",
-                "timestamp": datetime.now().isoformat()
+                "timestamp": datetime.now().isoformat(),
             }
 
             self.logger.info("Secure AI workflow completed successfully")
             return result
 
         except SecurityError as e:
-            self.security_log.append({
-                "event": "security_violation",
-                "error": str(e),
-                "timestamp": datetime.now()
-            })
+            self.security_log.append(
+                {
+                    "event": "security_violation",
+                    "error": str(e),
+                    "timestamp": datetime.now(),
+                }
+            )
             self.logger.error(f"Security violation: {str(e)}")
             raise e
         except Exception as e:
-            self.security_log.append({
-                "event": "unexpected_error",
-                "error": str(e),
-                "timestamp": datetime.now()
-            })
+            self.security_log.append(
+                {
+                    "event": "unexpected_error",
+                    "error": str(e),
+                    "timestamp": datetime.now(),
+                }
+            )
             self.logger.error(f"Unexpected error: {str(e)}")
             raise SecurityError(f"Secure operation failed: {str(e)}")
 
@@ -361,8 +381,9 @@ class KiloCoderSecureAI:
             "openrouter_key_health": self.openrouter.key_usage,
             "security_violations": len(self.security_log),
             "last_activity": datetime.now().isoformat(),
-            "status": "SECURE" if len(self.security_log) == 0 else "ATTENTION_REQUIRED"
+            "status": "SECURE" if len(self.security_log) == 0 else "ATTENTION_REQUIRED",
         }
+
 
 # Secure integration example
 if __name__ == "__main__":
@@ -373,7 +394,7 @@ if __name__ == "__main__":
         # Example: Secure research and code generation
         result = ai.secure_research_and_generate(
             research_query="Latest Python security best practices 2025",
-            generation_prompt="Generate secure Python code example for API authentication"
+            generation_prompt="Generate secure Python code example for API authentication",
         )
 
         print("Research Results:", result["research"]["content"])

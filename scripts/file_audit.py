@@ -32,29 +32,29 @@ VERSION_GLOB = "*_Version*.md"
 SUMMARY_FILE = "ENTERPRISE_FILE_SUMMARY.md"
 DEFAULT_CATEGORIES = {
     "Onboarding & Knowledge Vault": [
-        "knowledge-vault/*onboard*", "knowledge-vault/*README*"
+        "knowledge-vault/*onboard*",
+        "knowledge-vault/*README*",
     ],
     "Security & Compliance": [
-        "knowledge-vault/*SECURITY*", "knowledge-vault/*CREDENTIAL*",
-        "SECURITY_REMEDIATION_LOG.md", "SECURITY*.md"
+        "knowledge-vault/*SECURITY*",
+        "knowledge-vault/*CREDENTIAL*",
+        "SECURITY_REMEDIATION_LOG.md",
+        "SECURITY*.md",
     ],
-    "CI/CD & Workflows": [
-        ".github/workflows/*.yml", "scripts/*"
-    ],
+    "CI/CD & Workflows": [".github/workflows/*.yml", "scripts/*"],
     "Integrations & API": [
-        "knowledge-vault/*GMAIL*", "knowledge-vault/*integration*", "*integration*"
+        "knowledge-vault/*GMAIL*",
+        "knowledge-vault/*integration*",
+        "*integration*",
     ],
-    "Transition & Audit": [
-        "*TRANSITION*", "*handoff*", "*AUDIT*", "*REMEDIATION*"
-    ],
-    "Documentation": [
-        "README*", "*.md"
-    ]
+    "Transition & Audit": ["*TRANSITION*", "*handoff*", "*AUDIT*", "*REMEDIATION*"],
+    "Documentation": ["README*", "*.md"],
 }
 
 
 def find_files(patterns: List[str]) -> List[str]:
     import glob
+
     files: List[str] = []
     for pattern in patterns:
         files.extend(glob.glob(pattern))
@@ -80,7 +80,9 @@ def archive_files(files: List[str], archive_dir: str, dry_run: bool = False) -> 
     return moved
 
 
-def write_summary(summary_path: str, categories: Dict[str, List[str]]) -> Dict[str, List[str]]:
+def write_summary(
+    summary_path: str, categories: Dict[str, List[str]]
+) -> Dict[str, List[str]]:
     collected: Dict[str, List[str]] = {}
     with open(summary_path, "w", encoding="utf-8") as out:
         out.write("# 📁 Enterprise Repo File Summary\n\n")
@@ -101,17 +103,29 @@ def write_summary(summary_path: str, categories: Dict[str, List[str]]) -> Dict[s
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Enterprise file audit & archival")
     p.add_argument("--archive", action="store_true", help="Archive versioned files")
-    p.add_argument("--dry-run", action="store_true", help="Preview actions without modifying files")
-    p.add_argument("--summary-only", action="store_true", help="Only generate summary (no archival)")
-    p.add_argument("--categories-file", help="Path to custom categories YAML/JSON (future use)")
-    p.add_argument("--json", action="store_true", help="Emit JSON summary to stdout (machine readable)")
+    p.add_argument(
+        "--dry-run", action="store_true", help="Preview actions without modifying files"
+    )
+    p.add_argument(
+        "--summary-only",
+        action="store_true",
+        help="Only generate summary (no archival)",
+    )
+    p.add_argument(
+        "--categories-file", help="Path to custom categories YAML/JSON (future use)"
+    )
+    p.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit JSON summary to stdout (machine readable)",
+    )
     return p.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     try:
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         archive_dir = os.path.join("archive", timestamp)
 
         versioned = find_files([VERSION_GLOB])
@@ -128,11 +142,16 @@ def main() -> int:
 
         collected = write_summary(SUMMARY_FILE, DEFAULT_CATEGORIES)
         if args.json:
-            print(_json.dumps({
-                "versioned_count": len(versioned),
-                "archived": bool(args.archive and not args.dry_run),
-                "categories": collected
-            }, indent=2))
+            print(
+                _json.dumps(
+                    {
+                        "versioned_count": len(versioned),
+                        "archived": bool(args.archive and not args.dry_run),
+                        "categories": collected,
+                    },
+                    indent=2,
+                )
+            )
         print("[SUCCESS] Completed audit.")
         return 0
     except Exception as e:  # pragma: no cover (broad catch for CLI)

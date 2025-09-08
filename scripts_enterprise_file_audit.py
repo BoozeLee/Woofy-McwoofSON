@@ -8,17 +8,21 @@ import os
 import shutil
 from datetime import datetime
 
+
 def find_files(patterns):
     import glob
+
     files = []
     for pattern in patterns:
         files.extend(glob.glob(pattern))
     return sorted(set(files))
 
+
 def archive_files(files, archive_dir):
     os.makedirs(archive_dir, exist_ok=True)
     for f in files:
         shutil.move(f, os.path.join(archive_dir, os.path.basename(f)))
+
 
 def write_summary(summary_path, categories):
     with open(summary_path, "w") as out:
@@ -32,6 +36,7 @@ def write_summary(summary_path, categories):
             else:
                 out.write("_None found_\n")
             out.write("\n")
+
 
 if __name__ == "__main__":
     archive_dir = f"archive/{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -48,24 +53,23 @@ if __name__ == "__main__":
     # 2. Categorized summary
     categories = {
         "Onboarding & Knowledge Vault": [
-            "knowledge-vault/*onboard*", "knowledge-vault/*README*"
+            "knowledge-vault/*onboard*",
+            "knowledge-vault/*README*",
         ],
         "Security & Compliance": [
-            "knowledge-vault/*SECURITY*", "knowledge-vault/*CREDENTIAL*",
-            "SECURITY_REMEDIATION_LOG.md", "SECURITY*.md"
+            "knowledge-vault/*SECURITY*",
+            "knowledge-vault/*CREDENTIAL*",
+            "SECURITY_REMEDIATION_LOG.md",
+            "SECURITY*.md",
         ],
-        "CI/CD & Workflows": [
-            ".github/workflows/*.yml", "scripts/*"
-        ],
+        "CI/CD & Workflows": [".github/workflows/*.yml", "scripts/*"],
         "Integrations & API": [
-            "knowledge-vault/*GMAIL*", "knowledge-vault/*integration*", "*integration*"
+            "knowledge-vault/*GMAIL*",
+            "knowledge-vault/*integration*",
+            "*integration*",
         ],
-        "Transition & Audit": [
-            "*TRANSITION*", "*handoff*", "*AUDIT*", "*REMEDIATION*"
-        ],
-        "Documentation": [
-            "README*", "*.md"
-        ]
+        "Transition & Audit": ["*TRANSITION*", "*handoff*", "*AUDIT*", "*REMEDIATION*"],
+        "Documentation": ["README*", "*.md"],
     }
     print(f"📝 Generating categorized file summary: {summary_file}")
     write_summary(summary_file, categories)

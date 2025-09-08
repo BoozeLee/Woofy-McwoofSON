@@ -13,16 +13,6 @@ def lambda_handler(event, context):
     try:
         # Process the event (this is where the main logic will go)
         message = "Woof! 🐾 The Lambda function is running."
-        return {
-            'statusCode': 200,
-            'body': {
-                'message': message
-            }
-        }
+        return {"statusCode": 200, "body": {"message": message}}
     except Exception as e:
-        return {
-            'statusCode': 500,
-            'body': {
-                'error': str(e)
-            }
-        }
+        return {"statusCode": 500, "body": {"error": str(e)}}

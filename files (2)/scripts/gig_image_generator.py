@@ -10,9 +10,11 @@ from PIL import Image, ImageDraw, ImageFont
 import cairosvg
 import io
 
+
 def svg_to_png(svg_path):
     png_bytes = cairosvg.svg2png(url=svg_path)
     return Image.open(io.BytesIO(png_bytes))
+
 
 def create_gig_image(title, badge_paths, output="gig-image.png"):
     # Prepare base image
@@ -30,6 +32,7 @@ def create_gig_image(title, badge_paths, output="gig-image.png"):
         x += 200
     img.save(output)
     print(f"Saved {output}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

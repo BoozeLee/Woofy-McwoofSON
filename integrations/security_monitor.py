@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+
 class SecurityMonitor:
     """Advanced security monitoring for AI APIs"""
 
@@ -27,25 +28,22 @@ class SecurityMonitor:
             "failed_requests": 0,
             "rate_limit_hits": 0,
             "security_violations": 0,
-            "key_rotations": 0
+            "key_rotations": 0,
         }
         self.anomaly_thresholds = {
             "failure_rate": 0.10,  # 10% failure rate
             "rate_limit_threshold": 5,  # 5 rate limit hits
-            "violation_threshold": 3  # 3 security violations
+            "violation_threshold": 3,  # 3 security violations
         }
 
     def setup_logging(self):
         """Configure secure logging"""
         logging.basicConfig(
             level=logging.INFO,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
-                logging.FileHandler('security.log'),
-                logging.StreamHandler()
-            ]
+            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            handlers=[logging.FileHandler("security.log"), logging.StreamHandler()],
         )
-        self.logger = logging.getLogger('KiloCoderSecurity')
+        self.logger = logging.getLogger("KiloCoderSecurity")
 
     def log_api_request(self, api_name: str, success: bool, metadata: Dict = None):
         """Log API requests with security context"""
@@ -58,7 +56,7 @@ class SecurityMonitor:
             "timestamp": datetime.now().isoformat(),
             "api": api_name,
             "success": success,
-            "metadata": metadata or {}
+            "metadata": metadata or {},
         }
 
         self.logger.info(f"API_REQUEST: {json.dumps(log_entry)}")
@@ -71,7 +69,7 @@ class SecurityMonitor:
             "timestamp": datetime.now().isoformat(),
             "event": "rate_limit_hit",
             "api": api_name,
-            "key_index": key_index
+            "key_index": key_index,
         }
 
         self.logger.warning(f"RATE_LIMIT: {json.dumps(log_entry)}")
@@ -84,7 +82,7 @@ class SecurityMonitor:
             "timestamp": datetime.now().isoformat(),
             "event": "security_violation",
             "type": violation_type,
-            "details": details or {}
+            "details": details or {},
         }
 
         self.logger.error(f"SECURITY_VIOLATION: {json.dumps(log_entry)}")
@@ -97,7 +95,7 @@ class SecurityMonitor:
             "timestamp": datetime.now().isoformat(),
             "event": "key_rotation",
             "api": api_name,
-            "key_type": key_type
+            "key_type": key_type,
         }
 
         self.logger.info(f"KEY_ROTATION: {json.dumps(log_entry)}")
@@ -108,32 +106,47 @@ class SecurityMonitor:
 
         # Check for unusual failure rates
         if self.security_metrics["api_calls"] > 0:
-            failure_rate = self.security_metrics["failed_requests"] / self.security_metrics["api_calls"]
+            failure_rate = (
+                self.security_metrics["failed_requests"]
+                / self.security_metrics["api_calls"]
+            )
             if failure_rate > self.anomaly_thresholds["failure_rate"]:
-                anomalies.append({
-                    "type": "high_failure_rate",
-                    "value": failure_rate,
-                    "threshold": self.anomaly_thresholds["failure_rate"],
-                    "severity": "HIGH"
-                })
+                anomalies.append(
+                    {
+                        "type": "high_failure_rate",
+                        "value": failure_rate,
+                        "threshold": self.anomaly_thresholds["failure_rate"],
+                        "severity": "HIGH",
+                    }
+                )
 
         # Check for excessive rate limiting
-        if self.security_metrics["rate_limit_hits"] > self.anomaly_thresholds["rate_limit_threshold"]:
-            anomalies.append({
-                "type": "excessive_rate_limits",
-                "value": self.security_metrics["rate_limit_hits"],
-                "threshold": self.anomaly_thresholds["rate_limit_threshold"],
-                "severity": "MEDIUM"
-            })
+        if (
+            self.security_metrics["rate_limit_hits"]
+            > self.anomaly_thresholds["rate_limit_threshold"]
+        ):
+            anomalies.append(
+                {
+                    "type": "excessive_rate_limits",
+                    "value": self.security_metrics["rate_limit_hits"],
+                    "threshold": self.anomaly_thresholds["rate_limit_threshold"],
+                    "severity": "MEDIUM",
+                }
+            )
 
         # Check for security violations
-        if self.security_metrics["security_violations"] > self.anomaly_thresholds["violation_threshold"]:
-            anomalies.append({
-                "type": "multiple_security_violations",
-                "value": self.security_metrics["security_violations"],
-                "threshold": self.anomaly_thresholds["violation_threshold"],
-                "severity": "CRITICAL"
-            })
+        if (
+            self.security_metrics["security_violations"]
+            > self.anomaly_thresholds["violation_threshold"]
+        ):
+            anomalies.append(
+                {
+                    "type": "multiple_security_violations",
+                    "value": self.security_metrics["security_violations"],
+                    "threshold": self.anomaly_thresholds["violation_threshold"],
+                    "severity": "CRITICAL",
+                }
+            )
 
         return anomalies
 
@@ -159,7 +172,7 @@ class SecurityMonitor:
             "anomalies": anomalies,
             "status": status,
             "recommendations": self._generate_recommendations(anomalies),
-            "uptime": self._calculate_uptime()
+            "uptime": self._calculate_uptime(),
         }
 
     def _generate_recommendations(self, anomalies: List[Dict]) -> List[str]:
@@ -169,15 +182,23 @@ class SecurityMonitor:
         anomaly_types = {anomaly["type"] for anomaly in anomalies}
 
         if "high_failure_rate" in anomaly_types:
-            recommendations.append("Investigate API failure causes and implement circuit breaker pattern")
-            recommendations.append("Consider implementing exponential backoff for retries")
+            recommendations.append(
+                "Investigate API failure causes and implement circuit breaker pattern"
+            )
+            recommendations.append(
+                "Consider implementing exponential backoff for retries"
+            )
 
         if "excessive_rate_limits" in anomaly_types:
             recommendations.append("Add more API keys for better load distribution")
-            recommendations.append("Implement intelligent key rotation based on usage patterns")
+            recommendations.append(
+                "Implement intelligent key rotation based on usage patterns"
+            )
 
         if "multiple_security_violations" in anomaly_types:
-            recommendations.append("URGENT: Review security logs and implement additional safeguards")
+            recommendations.append(
+                "URGENT: Review security logs and implement additional safeguards"
+            )
             recommendations.append("Consider activating emergency response protocol")
 
         # General recommendations
@@ -203,37 +224,42 @@ class SecurityMonitor:
                 "status": report["status"],
                 "total_requests": self.security_metrics["api_calls"],
                 "failure_rate": f"{(self.security_metrics['failed_requests'] / max(self.security_metrics['api_calls'], 1)) * 100:.1f}%",
-                "active_anomalies": len(report["anomalies"])
+                "active_anomalies": len(report["anomalies"]),
             },
             "metrics": self.security_metrics,
             "anomalies": report["anomalies"],
             "recommendations": report["recommendations"],
-            "last_updated": datetime.now().isoformat()
+            "last_updated": datetime.now().isoformat(),
         }
 
     def export_security_log(self, filename: str = None) -> str:
         """Export security log for analysis"""
         if not filename:
-            filename = f"security_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            filename = (
+                f"security_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            )
 
         export_data = {
             "export_timestamp": datetime.now().isoformat(),
             "metrics": self.security_metrics,
             "report": self.generate_security_report(),
-            "log_file": "security.log"
+            "log_file": "security.log",
         }
 
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             json.dump(export_data, f, indent=2)
 
         return filename
 
+
 # Global security monitor instance
 security_monitor = SecurityMonitor()
+
 
 def get_security_status():
     """Get current security status for external access"""
     return security_monitor.get_dashboard_data()
+
 
 def log_security_event(event_type: str, **kwargs):
     """Log security events from external modules"""
@@ -245,6 +271,7 @@ def log_security_event(event_type: str, **kwargs):
         security_monitor.log_security_violation(**kwargs)
     elif event_type == "key_rotation":
         security_monitor.log_key_rotation(**kwargs)
+
 
 if __name__ == "__main__":
     print("🔐 KiloCoder Security Monitoring Dashboard")
@@ -259,20 +286,22 @@ if __name__ == "__main__":
     print(f"🚨 Active Anomalies: {dashboard['summary']['active_anomalies']}")
     print()
 
-    if dashboard['anomalies']:
+    if dashboard["anomalies"]:
         print("🚨 DETECTED ANOMALIES:")
-        for anomaly in dashboard['anomalies']:
-            print(f"  • {anomaly['type'].replace('_', ' ').title()}: {anomaly['value']} (Severity: {anomaly['severity']})")
+        for anomaly in dashboard["anomalies"]:
+            print(
+                f"  • {anomaly['type'].replace('_', ' ').title()}: {anomaly['value']} (Severity: {anomaly['severity']})"
+            )
         print()
 
-    if dashboard['recommendations']:
+    if dashboard["recommendations"]:
         print("💡 RECOMMENDATIONS:")
-        for rec in dashboard['recommendations']:
+        for rec in dashboard["recommendations"]:
             print(f"  • {rec}")
         print()
 
     print("📋 SECURITY METRICS:")
-    for key, value in dashboard['metrics'].items():
+    for key, value in dashboard["metrics"].items():
         print(f"  • {key.replace('_', ' ').title()}: {value}")
 
     print()

@@ -23,6 +23,7 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class WatsonxClient:
     """
     Client for interacting with IBM watsonx AI API.
@@ -41,24 +42,32 @@ class WatsonxClient:
             api_key: IBM watsonx API key. If None, will attempt to load from environment.
             project_id: IBM watsonx project ID. If None, will attempt to load from environment.
         """
-        self.api_key = api_key or os.getenv('WATSONX_API_KEY')
-        self.project_id = project_id or os.getenv('WATSONX_PROJECT_ID')
+        self.api_key = api_key or os.getenv("WATSONX_API_KEY")
+        self.project_id = project_id or os.getenv("WATSONX_PROJECT_ID")
 
         if not self.api_key:
-            raise ValueError("watsonx API key not provided and not found in environment variables")
+            raise ValueError(
+                "watsonx API key not provided and not found in environment variables"
+            )
         if not self.project_id:
-            raise ValueError("watsonx project ID not provided and not found in environment variables")
+            raise ValueError(
+                "watsonx project ID not provided and not found in environment variables"
+            )
 
         # Placeholder - actual endpoint needs to be confirmed
         self.base_url = "https://api.watsonx.ai"  # This may need to be updated
         self.session = requests.Session()
-        self.session.headers.update({
-            'Authorization': f'Bearer {self.api_key}',
-            'Content-Type': 'application/json',
-            'X-Watson-Project-Id': self.project_id
-        })
+        self.session.headers.update(
+            {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+                "X-Watson-Project-Id": self.project_id,
+            }
+        )
 
-    def generate_text(self, prompt: str, model_id: str = "meta-llama/llama-3-70b-instruct", **kwargs) -> Dict[str, Any]:
+    def generate_text(
+        self, prompt: str, model_id: str = "meta-llama/llama-3-70b-instruct", **kwargs
+    ) -> Dict[str, Any]:
         """
         Generate text using watsonx AI model.
 
@@ -86,14 +95,16 @@ class WatsonxClient:
                 "top_p": 1.0,
                 "top_k": 50,
                 "repetition_penalty": 1.0,
-                **kwargs
+                **kwargs,
             },
             "model_id": model_id,
-            "project_id": self.project_id
+            "project_id": self.project_id,
         }
 
         try:
-            logger.info(f"Sending text generation request to watsonx API (model: {model_id})")
+            logger.info(
+                f"Sending text generation request to watsonx API (model: {model_id})"
+            )
             response = self.session.post(endpoint, json=payload)
             response.raise_for_status()
 
@@ -147,6 +158,7 @@ class WatsonxClient:
         """Close the HTTP session."""
         self.session.close()
 
+
 def main():
     """
     Example usage of the watsonx client.
@@ -165,7 +177,10 @@ def main():
 
     except Exception as e:
         logger.error(f"Error in main: {str(e)}")
-        print("Note: watsonx integration requires proper API credentials and endpoint configuration")
+        print(
+            "Note: watsonx integration requires proper API credentials and endpoint configuration"
+        )
+
 
 if __name__ == "__main__":
     main()

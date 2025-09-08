@@ -19,13 +19,14 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+
 class AutomatedKeyRotation:
     """Automated API key rotation for maximum security"""
 
     def __init__(self):
         self.rotation_schedule = {
             "perplexity": 90,  # 90 days
-            "openrouter": 30   # 30 days (more frequent due to multiple keys)
+            "openrouter": 30,  # 30 days (more frequent due to multiple keys)
         }
         self.last_rotation = self._load_rotation_history()
         self.rotation_log = []
@@ -34,14 +35,14 @@ class AutomatedKeyRotation:
     def _load_rotation_history(self) -> Dict:
         """Load key rotation history"""
         try:
-            with open('key_rotation_history.json', 'r') as f:
+            with open("key_rotation_history.json", "r") as f:
                 return json.load(f)
         except FileNotFoundError:
             return {}
 
     def _save_rotation_history(self):
         """Save key rotation history"""
-        with open('key_rotation_history.json', 'w') as f:
+        with open("key_rotation_history.json", "w") as f:
             json.dump(self.last_rotation, f, indent=2)
 
     def should_rotate_key(self, api_name: str) -> bool:
@@ -68,12 +69,14 @@ class AutomatedKeyRotation:
             print("6. Update .env file securely")
 
             # Log rotation event
-            self.rotation_log.append({
-                "api": "perplexity",
-                "event": "rotation_required",
-                "timestamp": datetime.now().isoformat(),
-                "days_since_last": self._get_days_since_rotation("perplexity")
-            })
+            self.rotation_log.append(
+                {
+                    "api": "perplexity",
+                    "event": "rotation_required",
+                    "timestamp": datetime.now().isoformat(),
+                    "days_since_last": self._get_days_since_rotation("perplexity"),
+                }
+            )
 
             # Mark as rotated (manual confirmation required)
             self.last_rotation["perplexity"] = datetime.now().isoformat()
@@ -98,12 +101,14 @@ class AutomatedKeyRotation:
             print("6. Update .env file securely")
 
             # Log rotation event
-            self.rotation_log.append({
-                "api": "openrouter",
-                "event": "rotation_required",
-                "timestamp": datetime.now().isoformat(),
-                "days_since_last": self._get_days_since_rotation("openrouter")
-            })
+            self.rotation_log.append(
+                {
+                    "api": "openrouter",
+                    "event": "rotation_required",
+                    "timestamp": datetime.now().isoformat(),
+                    "days_since_last": self._get_days_since_rotation("openrouter"),
+                }
+            )
 
             self.last_rotation["openrouter"] = datetime.now().isoformat()
             self._save_rotation_history()
@@ -143,7 +148,9 @@ class AutomatedKeyRotation:
         for api_name in self.rotation_schedule:
             days_since = self._get_days_since_rotation(api_name)
             days_until = self._get_days_until_rotation(api_name)
-            status = "🔴 ROTATION DUE" if days_until == 0 else f"🟢 OK ({days_until} days)"
+            status = (
+                "🔴 ROTATION DUE" if days_until == 0 else f"🟢 OK ({days_until} days)"
+            )
             print(f"  {api_name.capitalize()}: {status} (Last: {days_since} days ago)")
 
         print()
@@ -183,16 +190,17 @@ class AutomatedKeyRotation:
             "perplexity": {
                 "days_since_rotation": self._get_days_since_rotation("perplexity"),
                 "days_until_rotation": self._get_days_until_rotation("perplexity"),
-                "status": "due" if self.should_rotate_key("perplexity") else "ok"
+                "status": "due" if self.should_rotate_key("perplexity") else "ok",
             },
             "openrouter": {
                 "days_since_rotation": self._get_days_since_rotation("openrouter"),
                 "days_until_rotation": self._get_days_until_rotation("openrouter"),
-                "status": "due" if self.should_rotate_key("openrouter") else "ok"
+                "status": "due" if self.should_rotate_key("openrouter") else "ok",
             },
             "rotation_log": self.rotation_log[-10:],  # Last 10 events
-            "schedule": self.rotation_schedule
+            "schedule": self.rotation_schedule,
         }
+
 
 if __name__ == "__main__":
     print("🚀 KiloCoder Enterprise Key Rotation System")
@@ -203,6 +211,7 @@ if __name__ == "__main__":
 
     # Command line options
     import sys
+
     if len(sys.argv) > 1:
         if sys.argv[1] == "check":
             rotator.check_all_keys()

@@ -15,6 +15,7 @@ import sys
 from dotenv import load_dotenv
 from groq import Groq
 
+
 def test_groq_integration():
     """Test GROQ API integration with llama-3.3-70b-versatile model."""
 
@@ -45,11 +46,11 @@ def test_groq_integration():
             messages=[
                 {
                     "role": "user",
-                    "content": "Hello GROQ! What is the capital of France? Also, briefly explain how neuromorphic computing differs from traditional computing."
+                    "content": "Hello GROQ! What is the capital of France? Also, briefly explain how neuromorphic computing differs from traditional computing.",
                 }
             ],
             max_tokens=200,
-            temperature=0.1  # Low temperature for consistent responses
+            temperature=0.1,  # Low temperature for consistent responses
         )
 
         # Extract response
@@ -76,6 +77,7 @@ def test_groq_integration():
         print("3. Ensure model 'llama-3.3-70b-versatile' is available")
         print("4. Check GROQ service status at https://console.groq.com")
         return False
+
 
 if __name__ == "__main__":
     success = test_groq_integration()

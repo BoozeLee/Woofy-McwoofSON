@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+
 def test_environment_setup():
     """Test environment variable configuration"""
     print("🔧 Testing Environment Setup...")
@@ -27,7 +28,7 @@ def test_environment_setup():
         "OPENROUTER_API_KEY_PRIMARY",
         "OPENROUTER_API_KEY_SECONDARY",
         "OPENROUTER_API_KEY_TERTIARY",
-        "GROQ_API_KEY"
+        "GROQ_API_KEY",
     ]
 
     missing_vars = []
@@ -47,6 +48,7 @@ def test_environment_setup():
     print("\n✅ Environment setup: PASSED")
     return True
 
+
 def test_secure_imports():
     """Test secure module imports"""
     print("\n🔐 Testing Secure Imports...")
@@ -54,12 +56,15 @@ def test_secure_imports():
 
     try:
         from secure_ai_apis import KiloCoderSecureAI, SecurityError
+
         print("✅ Secure AI APIs: IMPORTED")
 
         from key_rotation import AutomatedKeyRotation
+
         print("✅ Key Rotation: IMPORTED")
 
         from security_monitor import SecurityMonitor, get_security_status
+
         print("✅ Security Monitor: IMPORTED")
 
         print("\n✅ Secure imports: PASSED")
@@ -68,6 +73,7 @@ def test_secure_imports():
     except ImportError as e:
         print(f"❌ Import failed: {e}")
         return False
+
 
 def test_secure_client_initialization():
     """Test secure client initialization without API calls"""
@@ -87,6 +93,7 @@ def test_secure_client_initialization():
 
         # Test combined client
         from secure_ai_apis import KiloCoderSecureAI
+
         ai = KiloCoderSecureAI()
         print("✅ Combined AI client: INITIALIZED")
 
@@ -96,6 +103,7 @@ def test_secure_client_initialization():
     except Exception as e:
         print(f"❌ Client initialization failed: {e}")
         return False
+
 
 def test_security_monitoring():
     """Test security monitoring functionality"""
@@ -130,6 +138,7 @@ def test_security_monitoring():
         print(f"❌ Security monitoring failed: {e}")
         return False
 
+
 def test_key_rotation_system():
     """Test key rotation system"""
     print("\n🔄 Testing Key Rotation System...")
@@ -157,6 +166,7 @@ def test_key_rotation_system():
         print(f"❌ Key rotation failed: {e}")
         return False
 
+
 def test_emergency_response():
     """Test emergency response system (simulation only)"""
     print("\n🚨 Testing Emergency Response System...")
@@ -170,8 +180,9 @@ def test_emergency_response():
         print(f"   Location: {emergency_script}")
 
         # Check if executable (on Unix systems)
-        if os.name != 'nt':  # Not Windows
+        if os.name != "nt":  # Not Windows
             import stat
+
             if os.stat(emergency_script).st_mode & stat.S_IEXEC:
                 print("✅ Emergency script: EXECUTABLE")
             else:
@@ -184,6 +195,7 @@ def test_emergency_response():
     else:
         print(f"❌ Emergency script not found: {emergency_script}")
         return False
+
 
 def run_full_integration_test():
     """Run complete integration test suite"""
@@ -198,7 +210,7 @@ def run_full_integration_test():
         "client_initialization": test_secure_client_initialization(),
         "security_monitoring": test_security_monitoring(),
         "key_rotation": test_key_rotation_system(),
-        "emergency_response": test_emergency_response()
+        "emergency_response": test_emergency_response(),
     }
 
     print("\n" + "=" * 60)
@@ -230,17 +242,20 @@ def run_full_integration_test():
         "summary": {
             "passed": passed,
             "total": total,
-            "success_rate": f"{(passed/total)*100:.1f}%" if total > 0 else "0%"
-        }
+            "success_rate": f"{(passed/total)*100:.1f}%" if total > 0 else "0%",
+        },
     }
 
-    report_file = f"integration_test_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    with open(report_file, 'w') as f:
+    report_file = (
+        f"integration_test_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    )
+    with open(report_file, "w") as f:
         json.dump(test_report, f, indent=2)
 
     print(f"\n📄 Detailed report saved: {report_file}")
 
     return passed == total
+
 
 if __name__ == "__main__":
     success = run_full_integration_test()

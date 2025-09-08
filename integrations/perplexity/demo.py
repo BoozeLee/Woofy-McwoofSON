@@ -17,6 +17,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from perplexity_client import PerplexityClient
 
+
 def main():
     """
     Demo function showing Perplexity client usage.
@@ -33,7 +34,7 @@ def main():
         queries = [
             "What is the current population of Tokyo?",
             "Explain quantum computing in simple terms",
-            "What are the latest developments in AI safety?"
+            "What are the latest developments in AI safety?",
         ]
 
         for i, query in enumerate(queries, 1):
@@ -45,13 +46,17 @@ def main():
                 print("✅ Response received successfully!")
 
                 # Print a summary (avoid printing full response for brevity)
-                if 'choices' in response and response['choices']:
-                    content = response['choices'][0].get('message', {}).get('content', '')
+                if "choices" in response and response["choices"]:
+                    content = (
+                        response["choices"][0].get("message", {}).get("content", "")
+                    )
                     # Print first 200 characters
                     preview = content[:200] + "..." if len(content) > 200 else content
                     print(f"📄 Preview: {preview}")
                 else:
-                    print("📄 Response structure may vary - check full response in logs")
+                    print(
+                        "📄 Response structure may vary - check full response in logs"
+                    )
 
             except Exception as e:
                 print(f"❌ Query failed: {str(e)}")
@@ -65,6 +70,7 @@ def main():
         print("💡 Make sure PERPLEXITY_API_KEY is set in your .env file")
     except Exception as e:
         print(f"❌ Demo failed: {str(e)}")
+
 
 if __name__ == "__main__":
     main()

@@ -12,14 +12,14 @@ groq_pricing = {
     "Features": [
         "Basic inference, Community support",
         "Batch API (25% discount), Higher limits",
-        "Dedicated hardware, Custom SLAs"
-    ]
+        "Dedicated hardware, Custom SLAs",
+    ],
 }
 
 groq_df = pd.DataFrame(groq_pricing)
 print("GROQ Pricing Tiers:")
 print(groq_df.to_string(index=False))
-print("\n" + "="*80 + "\n")
+print("\n" + "=" * 80 + "\n")
 
 # VS Code GROQ Extensions Analysis
 extensions_data = {
@@ -28,52 +28,52 @@ extensions_data = {
         "Groq Code Copilot",
         "Groq Code Completion",
         "codebuddy-groq",
-        "CodeGPT with Groq"
+        "CodeGPT with Groq",
     ],
     "Publisher": [
         "Unclecode",
-        "sohammhatre521", 
+        "sohammhatre521",
         "MaximeRivest",
         "SaiSahanTalabattula",
-        "CodeGPT Team"
+        "CodeGPT Team",
     ],
     "Models Supported": [
         "Llama3.1 series, 405B",
         "Multiple Groq models",
         "Lightning-fast inference",
         "llama3-8b-8192",
-        "All Groq models"
+        "All Groq models",
     ],
     "Key Features": [
         "File & URL attachments, Contextual",
         "Interactive assistance, Q&A",
         "AI-powered completions",
         "Direct API integration",
-        "Code explanation, Documentation"
+        "Code explanation, Documentation",
     ],
     "Installation": [
         "marketplace.visualstudio.com",
         "VS Code Marketplace",
-        "VS Code Marketplace", 
+        "VS Code Marketplace",
         "Manual installation",
-        "VS Code Marketplace"
-    ]
+        "VS Code Marketplace",
+    ],
 }
 
 extensions_df = pd.DataFrame(extensions_data)
 print("VS Code GROQ Extensions Comparison:")
 print(extensions_df.to_string(index=False))
-print("\n" + "="*80 + "\n")
+print("\n" + "=" * 80 + "\n")
 
 # Security Best Practices Summary
 security_practices = {
     "Practice": [
         "API Key Storage",
         "Environment Variables",
-        "Key Rotation", 
+        "Key Rotation",
         "Access Control",
         "Usage Monitoring",
-        "Error Handling"
+        "Error Handling",
     ],
     "Implementation": [
         "Never hardcode in source code",
@@ -81,7 +81,7 @@ security_practices = {
         "Rotate keys quarterly",
         "Team owner/developer roles only",
         "Dashboard monitoring, alerts",
-        "Graceful error handling"
+        "Graceful error handling",
     ],
     "Tools/Commands": [
         "python-dotenv, .gitignore",
@@ -89,14 +89,14 @@ security_practices = {
         "console.groq.com/keys",
         "GroqCloud Console permissions",
         "GroqCloud Dashboard",
-        "try/except blocks, exponential backoff"
-    ]
+        "try/except blocks, exponential backoff",
+    ],
 }
 
 security_df = pd.DataFrame(security_practices)
 print("GROQ Security Best Practices:")
 print(security_df.to_string(index=False))
-print("\n" + "="*80 + "\n")
+print("\n" + "=" * 80 + "\n")
 
 # Neuromorphic Computing Integration Opportunities
 neuromorphic_integration = {
@@ -106,7 +106,7 @@ neuromorphic_integration = {
         "Robotics Control",
         "IoT Devices",
         "Pattern Recognition",
-        "Autonomous Systems"
+        "Autonomous Systems",
     ],
     "GROQ LPU Benefits": [
         "Low latency, high throughput",
@@ -114,15 +114,15 @@ neuromorphic_integration = {
         "Motor control optimization",
         "Energy-efficient processing",
         "Advanced pattern matching",
-        "Real-time decision making"
+        "Real-time decision making",
     ],
     "Neuromorphic Synergy": [
         "Spiking neural networks",
-        "Event-driven computation", 
+        "Event-driven computation",
         "Sensorimotor integration",
         "Distributed processing",
         "Adaptive learning",
-        "Predictive control"
+        "Predictive control",
     ],
     "Research Potential": [
         "Brain-inspired architectures",
@@ -130,8 +130,8 @@ neuromorphic_integration = {
         "Embodied intelligence",
         "Neuroplasticity modeling",
         "Cognitive computing",
-        "Bio-hybrid systems"
-    ]
+        "Bio-hybrid systems",
+    ],
 }
 
 neuro_df = pd.DataFrame(neuromorphic_integration)

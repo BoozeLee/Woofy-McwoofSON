@@ -42,7 +42,9 @@ def _build_response(status: int, payload: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def lambda_handler(event, context):  # pragma: no cover (context aspects not covered fully)
+def lambda_handler(
+    event, context
+):  # pragma: no cover (context aspects not covered fully)
     """Primary Lambda entrypoint (dispatch).
 
     Contract:
@@ -54,33 +56,45 @@ def lambda_handler(event, context):  # pragma: no cover (context aspects not cov
     """
     try:
         if not isinstance(event, dict):
-            return _build_response(400, {
-                "status": "error",
-                "error": "Invalid event type",
-                "expected": "object",
-            })
+            return _build_response(
+                400,
+                {
+                    "status": "error",
+                    "error": "Invalid event type",
+                    "expected": "object",
+                },
+            )
 
         action_raw = event.get("action", "hello")
         if not isinstance(action_raw, str):
-            return _build_response(400, {
-                "status": "error",
-                "error": "Action must be a string",
-            })
+            return _build_response(
+                400,
+                {
+                    "status": "error",
+                    "error": "Action must be a string",
+                },
+            )
 
         action = action_raw.lower()
         func = ACTION_REGISTRY.get(action)
         if not func:
-            return _build_response(400, {
-                "status": "error",
-                "error": "Unknown action",
-                "supported": sorted(ACTION_REGISTRY.keys()),
-            })
+            return _build_response(
+                400,
+                {
+                    "status": "error",
+                    "error": "Unknown action",
+                    "supported": sorted(ACTION_REGISTRY.keys()),
+                },
+            )
 
         payload = func(event)
         return _build_response(200, payload)
     except Exception as e:  # Catch-all to ensure JSON response contract
-        return _build_response(500, {
-            "status": "error",
-            "error": "Unhandled exception",
-            "detail": str(e)[:200],
-        })
+        return _build_response(
+            500,
+            {
+                "status": "error",
+                "error": "Unhandled exception",
+                "detail": str(e)[:200],
+            },
+        )

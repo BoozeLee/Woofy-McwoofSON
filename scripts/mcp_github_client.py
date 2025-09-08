@@ -8,11 +8,12 @@ import requests
 import json
 import os
 
+
 class MCPGitHubClient:
     def __init__(self, mcp_server_url="http://localhost:8080"):
         self.mcp_server_url = mcp_server_url
         self.session = requests.Session()
-        
+
     def get_repo_context(self, repo_name="Woofy-McwoofSON"):
         """Get repository context through MCP server"""
         try:
@@ -25,7 +26,7 @@ class MCPGitHubClient:
         except requests.RequestException as e:
             print(f"Connection error: {e}")
             return None
-    
+
     def health_check(self):
         """Check MCP server health"""
         try:
@@ -36,13 +37,14 @@ class MCPGitHubClient:
         except requests.RequestException:
             return None
 
+
 def main():
     """Main function to test MCP GitHub client"""
     print("🔗 MCP GitHub Client Test")
     print("=" * 30)
-    
+
     client = MCPGitHubClient()
-    
+
     # Health check
     health = client.health_check()
     if health:
@@ -50,7 +52,7 @@ def main():
     else:
         print("❌ MCP Server not available")
         return
-    
+
     # Get repository context
     context = client.get_repo_context()
     if context:
@@ -58,6 +60,7 @@ def main():
         print(f"Context: {context}")
     else:
         print("❌ Could not retrieve repository context")
+
 
 if __name__ == "__main__":
     main()

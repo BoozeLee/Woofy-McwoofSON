@@ -21,6 +21,7 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class PerplexityClient:
     """
     Client for interacting with Perplexity AI API.
@@ -36,18 +37,24 @@ class PerplexityClient:
         Args:
             api_key: Perplexity API key. If None, will attempt to load from environment.
         """
-        self.api_key = api_key or os.getenv('PERPLEXITY_API_KEY')
+        self.api_key = api_key or os.getenv("PERPLEXITY_API_KEY")
         if not self.api_key:
-            raise ValueError("Perplexity API key not provided and not found in environment variables")
+            raise ValueError(
+                "Perplexity API key not provided and not found in environment variables"
+            )
 
         self.base_url = "https://api.perplexity.ai"
         self.session = requests.Session()
-        self.session.headers.update({
-            'Authorization': f'Bearer {self.api_key}',
-            'Content-Type': 'application/json'
-        })
+        self.session.headers.update(
+            {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            }
+        )
 
-    def query(self, prompt: str, model: str = "pplx-7b-online", **kwargs) -> Dict[str, Any]:
+    def query(
+        self, prompt: str, model: str = "pplx-7b-online", **kwargs
+    ) -> Dict[str, Any]:
         """
         Execute a query against Perplexity AI.
 
@@ -66,13 +73,8 @@ class PerplexityClient:
 
         payload = {
             "model": model,
-            "messages": [
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            **kwargs
+            "messages": [{"role": "user", "content": prompt}],
+            **kwargs,
         }
 
         try:
@@ -119,6 +121,7 @@ class PerplexityClient:
         """Close the HTTP session."""
         self.session.close()
 
+
 def main():
     """
     Example usage of the Perplexity client.
@@ -135,6 +138,7 @@ def main():
 
     except Exception as e:
         logger.error(f"Error in main: {str(e)}")
+
 
 if __name__ == "__main__":
     main()

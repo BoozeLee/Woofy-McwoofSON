@@ -17,6 +17,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from gemini_client import GeminiClient
 
+
 def main():
     """
     Demo function showing Gemini client usage.
@@ -33,7 +34,7 @@ def main():
         queries = [
             "Explain the concept of machine learning in simple terms",
             "Write a short Python function to reverse a string",
-            "What are the benefits of renewable energy?"
+            "What are the benefits of renewable energy?",
         ]
 
         for i, query in enumerate(queries, 1):
@@ -45,7 +46,7 @@ def main():
                 print("✅ Response received successfully!")
 
                 # Print a summary (avoid printing full response for brevity)
-                text = response.get('text', '')
+                text = response.get("text", "")
                 preview = text[:300] + "..." if len(text) > 300 else text
                 print(f"📄 Preview: {preview}")
 
@@ -53,11 +54,11 @@ def main():
                 print(f"❌ Query failed: {str(e)}")
 
         # List available models
-        print("
-📋 Fetching available models..."        try:
+        print("\n📋 Fetching available models...")
+        try:
             models = client.list_models()
             print(f"✅ Found {len(models['models'])} Gemini models")
-            for model in models['models'][:3]:  # Show first 3
+            for model in models["models"][:3]:  # Show first 3
                 print(f"   - {model['name']}")
         except Exception as e:
             print(f"❌ Failed to list models: {str(e)}")
@@ -71,18 +72,19 @@ def main():
     except Exception as e:
         print(f"❌ Demo failed: {str(e)}")
 
+
 def test_credentials():
     """
     Test function to validate Gemini credentials without making API calls.
     """
     print("\n🔍 Testing Gemini credentials...")
 
-    api_key = os.getenv('GEMINI_API_KEY')
+    api_key = os.getenv("GEMINI_API_KEY")
 
     if api_key:
         print("✅ GEMINI_API_KEY is set")
         # Basic validation - check if it looks like a valid API key format
-        if api_key.startswith('AIza') and len(api_key) > 20:
+        if api_key.startswith("AIza") and len(api_key) > 20:
             print("✅ API key format appears valid")
         else:
             print("⚠️  API key format may be incorrect (should start with 'AIza')")
@@ -93,6 +95,7 @@ def test_credentials():
         print("🎯 Credentials appear to be configured correctly")
     else:
         print("⚠️  Credentials need to be configured before using Gemini integration")
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--test-credentials":
