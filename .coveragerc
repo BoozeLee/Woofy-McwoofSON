@@ -1,4 +1,25 @@
 [run]
+source = src/enterprise
+branch = True
+
+[report]
+show_missing = True
+skip_covered = False
+omit =
+    tests/*
+    */tests/*
+    **/conftest.py
+    **/sitecustomize.py
+    scripts/*
+    integrations/*
+    setup*.py
+    *_setup.py
+    **/examples/*
+    **/demos/*
+    **/temp-*/**
+
+[html]
+directory = coverage_html[run]
 source = integrations
 omit = 
     tests/*

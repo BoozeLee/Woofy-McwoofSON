@@ -1,17 +1,41 @@
+
+# WOOFY SECURITY GUARDRAILS - AUTO-APPLIED
+import os
+import sys
+import logging
+
+# Disable AWS credential logging
+for logger_name in ['boto3', 'botocore', 'urllib3', 's3transfer']:
+    logging.getLogger(logger_name).setLevel(logging.CRITICAL)
+
+# Suppress credential discovery
+os.environ['AWS_DEFAULT_OUTPUT'] = 'json'
+os.environ['AWS_CLI_FILE_ENCODING'] = 'UTF-8'
+
+# Import security guardrails
+try:
+    from security_guardrails import SecurityGuardrails
+    SecurityGuardrails.secure_log("Security guardrails active")
+except ImportError:
+    pass
+
 import boto3
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 class WoofyAWSIntegration:
     """AWS Integration for WOOFY McWOOFSON Enterprise AI Assistant"""
     
     def __init__(self):
-        self.session = boto3.Session()
-        self.s3 = self.session.client('s3')
-        self.lambda_client = self.session.client('lambda')
-        self.cloudwatch = self.session.client('cloudwatch')
-        self.iam = self.session.client('iam')
+        # Default region for local/dev to avoid NoRegionError during tests
+        region = os.environ.get('AWS_REGION') or os.environ.get('AWS_DEFAULT_REGION') or 'us-west-2'
+        self.session = boto3.Session(region_name=region)
+        # Defer credentials resolution until calls are made; creation is safe without creds
+        self.s3 = self.session.client('s3', region_name=region)
+        self.lambda_client = self.session.client('lambda', region_name=region)
+        self.cloudwatch = self.session.client('cloudwatch', region_name=region)
+        self.iam = self.session.client('iam', region_name=region)
         
     def setup_security_compliance(self):
         """Generate IAM policy for secure Python app with S3 access"""
@@ -98,7 +122,7 @@ def lambda_handler(event, context):
                 ],
                 'Value': 1.0,
                 'Unit': 'Count',
-                'Timestamp': datetime.utcnow()
+                'Timestamp': datetime.now(timezone.utc)
             }
         ]
         
@@ -129,7 +153,7 @@ def lambda_handler(event, context):
     def generate_compliance_report(self):
         """Generate compliance report for WOOFY"""
         report = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "service": "WOOFY McWOOFSON",
             "compliance_checks": {
                 "encryption": "AES256 enabled",

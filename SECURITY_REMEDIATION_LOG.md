@@ -370,6 +370,7 @@ This log documents all security remediation actions, credential exposures, and c
 
 ---
 
+
 ### Incident #11: Perplexity API Key Setup Guide (2025-09-08)
 **Status:** ✅ RESOLVED
 **Severity:** LOW (Documentation)
@@ -383,6 +384,23 @@ This log documents all security remediation actions, credential exposures, and c
 - This guide provides a clear, repeatable solution for developers encountering this setup issue, improving the onboarding experience.
 **Audit Log Entry:**
 - _2025-09-08_ Authored a setup guide for the Perplexity VS Code extension to standardize API key configuration and enhance security awareness – Gemini Code Assist
+
+---
+
+### Incident #12: Perplexity Code Review Guide (2025-09-08)
+**Status:** ✅ RESOLVED
+**Severity:** LOW (Documentation)
+**Description:** Created a standardized guide for using the Perplexity AI extension in VS Code to perform code reviews.
+**Actions Taken:**
+- Authored `docs/guides/PERPLEXITY_CODE_REVIEW_GUIDE.md`.
+- The guide details how to initiate a review using the context menu and Command Palette.
+- Included a list of best-practice prompts for bug detection, refactoring, documentation, and test generation.
+- Emphasized the importance of critically evaluating AI-generated feedback.
+**Evidence:**
+- New documentation file created: `docs/guides/PERPLEXITY_CODE_REVIEW_GUIDE.md`.
+- This guide helps standardize the use of AI tools for code quality improvement, ensuring a consistent and effective process for the team.
+**Audit Log Entry:**
+- _2025-09-08_ Authored a guide for performing AI-assisted code reviews with the Perplexity extension to improve code quality and standardize development practices – Gemini Code Assist
 
 ---
 

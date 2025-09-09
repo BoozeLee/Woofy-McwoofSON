@@ -31,6 +31,7 @@ Welcome to the WOOFY McWOOFSON team! This checklist ensures you have everything 
 - [ ] Study [ENTERPRISE-README.md](../ENTERPRISE-README.md) - Enterprise features
 - [ ] Understand [CONTRIBUTING.md](../CONTRIBUTING.md) - Contribution guidelines
 - [ ] Review [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) - Community standards
+- [ ] Review [Kilo Code Operational Guidelines](../docs/kilo-code-guidelines.md) - AI assistant operational procedures
 
 ### Architecture Understanding
 - [ ] Review [AWS Architecture](../docs_architecture_aws-architecture.md)

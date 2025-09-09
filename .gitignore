@@ -33,3 +33,27 @@ temp/
 .DS_Store
 Thumbs.db
 *.swp
+
+# WOOFY SECURITY - NEVER COMMIT THESE
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.local
+.env.production
+.aws/
+.azure/
+.gcp/
+credentials
+secrets.json
+config.json
+**/node_modules/
+**/.vscode/settings.json
+**/logs/
+**/*.log
+security_audit.log
+
+# Copilot session sync (local-only ledger)
+.copilot/
+.copilot/session-sync/

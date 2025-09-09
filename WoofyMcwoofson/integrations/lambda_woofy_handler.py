@@ -19,21 +19,82 @@ try:
 except ImportError:
     pass
 
+import json
+from typing import Any, Dict, Callable
+
+ActionFunc = Callable[[Dict[str, Any]], Dict[str, Any]]
+
+
+def action_hello(event: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "status": "ok",
+        "message": "Woofy McWoofson says: Hello, enterprise world! 🐾",
+    }
+
+
+def action_ping(event: Dict[str, Any]) -> Dict[str, Any]:
+    return {"status": "ok", "pong": True}
+
+
+ACTION_REGISTRY: Dict[str, ActionFunc] = {
+    "hello": action_hello,
+    "ping": action_ping,
+}
+
+
+def _build_response(status: int, payload: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "statusCode": status,
+    "body": json.dumps(payload, ensure_ascii=False),
+        "headers": {"Content-Type": "application/json"},
+    }
+
+
+def some_dependency(*args, **kwargs):  # pragma: no cover - placeholder for tests to patch
+    return {"statusCode": 200, "body": json.dumps({"message": "noop"})}
+
+
 def lambda_handler(event, context):
-    """
-    AWS Lambda function handler for the Woofy application.
-
-    Args:
-        event (dict): The event data passed to the Lambda function.
-        context (LambdaContext): The context object providing runtime information.
-
-    Returns:
-        dict: A response object containing the status and message.
-    """
-    # Example implementation
+    """Unified Lambda handler supporting API Gateway and action-dispatch."""
     try:
-        # Process the event (this is where the main logic will go)
-        message = "Woof! 🐾 The Lambda function is running."
-        return {"statusCode": 200, "body": {"message": message}}
+        if not isinstance(event, dict):
+            return _build_response(
+                400,
+                {
+                    "status": "error",
+                    "error": "Invalid event type",
+                    "expected": "object",
+                },
+            )
+
+        # API Gateway HTTP path
+        if "httpMethod" in event and "path" in event:
+            method = (event.get("httpMethod") or "").upper()
+            path = event.get("path") or ""
+            headers = {k.lower(): v for k, v in (event.get("headers") or {}).items()}
+
+            if path == "/woof":
+                if method != "GET":
+                    return _build_response(405, {"error": "Method Not Allowed"})
+                api_key = headers.get("x-api-key")
+                if not api_key:
+                    return _build_response(401, {"error": "Unauthorized"})
+                _ = some_dependency()
+                return {
+                    "statusCode": 200,
+                    "body": '{"message": "Woof! 🐾 The API is live."}',
+                    "headers": {"Content-Type": "application/json"},
+                }
+
+        # Action-dispatch path
+        action_raw = event.get("action", "hello")
+        if not isinstance(action_raw, str):
+            return _build_response(400, {"status": "error", "error": "Action must be a string"})
+        action = action_raw.lower()
+        func = ACTION_REGISTRY.get(action)
+        if not func:
+            return _build_response(400, {"status": "error", "error": "Unknown action", "supported": sorted(ACTION_REGISTRY.keys())})
+        payload = func(event)
+        return _build_response(200, payload)
     except Exception as e:
-        return {"statusCode": 500, "body": {"error": str(e)}}
+        return _build_response(500, {"status": "error", "error": "Unhandled exception", "detail": str(e)[:200]})

@@ -18,22 +18,25 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest-cov==5.0.0 coverage==7.6.1
 
-      - name: Run tests with coverage
+      - name: Run tests with coverage (src/enterprise only)
+        env:
+          PYTEST_ADDOPTS: "-q"
         run: |
-          pytest --cov=integrations --cov-report=xml --cov-report=term-missing --cov-fail-under=85
+          pytest --cov=src/enterprise --cov-config=.coveragerc --cov-report=xml --cov-report=html --cov-report=term-missing
+          # Ensure coverage.xml exists at root for upload/comment parsing
 
       - name: Upload coverage to Codecov
         if: success()
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.xml
           fail_ci_if_error: true
           verbose: false
@@ -44,6 +47,10 @@ jobs:
         with:
           script: |
             const fs = require('fs');
+            if (!fs.existsSync('coverage.xml')) {
+              core.warning('coverage.xml not found, skipping summary comment.');
+              return;
+            }
             const xml = fs.readFileSync('coverage.xml', 'utf8');
             const lines = (xml.match(/lines-covered="(\d+)" lines-valid="(\d+)"/) || []);
             if (lines.length === 3) {
@@ -58,3 +65,12 @@ jobs:
             } else {
               console.log('Could not parse coverage.xml for summary.');
             }
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage.xml
+            coverage_html

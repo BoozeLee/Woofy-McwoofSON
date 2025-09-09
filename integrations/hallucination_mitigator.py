@@ -1,3 +1,24 @@
+
+# WOOFY SECURITY GUARDRAILS - AUTO-APPLIED
+import os
+import sys
+import logging
+
+# Disable AWS credential logging
+for logger_name in ['boto3', 'botocore', 'urllib3', 's3transfer']:
+    logging.getLogger(logger_name).setLevel(logging.CRITICAL)
+
+# Suppress credential discovery
+os.environ['AWS_DEFAULT_OUTPUT'] = 'json'
+os.environ['AWS_CLI_FILE_ENCODING'] = 'UTF-8'
+
+# Import security guardrails
+try:
+    from security_guardrails import SecurityGuardrails
+    SecurityGuardrails.secure_log("Security guardrails active")
+except ImportError:
+    pass
+
 #!/usr/bin/env python3
 """
 WOOFY McWOOFSON Hallucination Mitigation System
@@ -13,7 +34,7 @@ import time
 import logging
 import requests
 from typing import Dict, List, Any, Optional, Tuple
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from dataclasses import dataclass
 import re
 from functools import wraps
@@ -168,7 +189,7 @@ class HallucinationMitigator:
             patterns_found=detected_patterns,
             confidence_score=confidence,
             mitigation_actions=mitigation_actions,
-            timestamp=datetime.utcnow().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
 
     def mitigate_response(self, text: str, result: HallucinationResult,
@@ -279,7 +300,7 @@ class HallucinationMitigator:
                     patterns_found=[],  # AWS service doesn't return patterns
                     confidence_score=confidence,
                     mitigation_actions=data.get('recommendations', []),
-                    timestamp=datetime.utcnow().isoformat()
+                    timestamp=datetime.now(timezone.utc).isoformat()
                 )
 
         except Exception as e:

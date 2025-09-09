@@ -1,3 +1,16 @@
+## Summary
+
+Describe the change and its impact.
+
+## Checks
+- [ ] Repo remains private-by-default (see Private Visibility Guard)
+- [ ] No secrets added (local secret scan passes)
+- [ ] Docs updated if behavior changes
+
+## Links
+- Private release policy: `docs/enterprise/PRIVATE_RELEASE_POLICY.md`
+- Org hardening checklist: `docs/enterprise/ORG_HARDENING_CHECKLIST.md`
+
 # 🐾 WOOFY McWOOFSON - Enterprise Pull Request
 
 ## 🎯 What does this PR do?
@@ -40,3 +53,15 @@ _Special deployment considerations or rollback plan?_
 
 ## 📊 Business Impact
 _How does this change support our revenue goals and partner attraction?_
+
+---
+
+## 💡 Prompt Kit (copy or open)
+- Feature: docs/prompts/feature.md
+- Bugfix: docs/prompts/bugfix.md
+- Tests: docs/prompts/tests.md
+- Security review: docs/prompts/security-review.md
+- API change: docs/prompts/api-change.md
+- Commits: docs/prompts/commit-messages.md
+
+> Tip: open these files in VS Code or GitHub and copy the blocks into Copilot Chat on either surface.

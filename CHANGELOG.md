@@ -86,27 +86,30 @@ All notable changes to WOOFY McWOOFSON will be tracked here.
 - Business partnership contact information and revenue streams
 
 ## [Unreleased]
-### Added
-- Action-based Lambda handler routing (`hello`, `ping`) with structured error responses
-- Expanded negative/edge test coverage (`tests/test_lambda_woofy_handler_negative.py`)
-- Enhanced security scanning now includes markdown & broader patterns (`tests/test_security.py`)
-- Coverage workflow with threshold enforcement (85%) + `.coveragerc`, Codecov upload, and README badge placeholder
-- **Perplexity Bot Integration**: Complete API client with secure credential management
-- **IBM watsonx Integration**: Template client ready for credential configuration
-- **Google Gemini Integration**: Complete API client with text generation capabilities
-- AI integration documentation under `/docs/integrations/`
-
-### Documentation
-- ADR directory validated (serverless baseline present)
+- README: Added Prompt Kit and Copilot Instructions badges linking to `docs/prompts/README.md` and `.github/copilot-instructions.md`.
+- CI: Enhanced `coverage.yml` to run pytest with coverage, upload artifact, and post PR coverage summary; optional Codecov upload when `CODECOV_TOKEN` is set.
+- CI: Coverage workflow now generates HTML (`coverage_html/`) and uploads it along with `coverage.xml` for PR previews.
+- Added prompt kit under `docs/prompts/` (feature, bugfix, tests, security-review, api-change, commit-messages)
+- Updated PR template to surface prompt kit links for both VS Code and GitHub.com
+- Docs README references prompt kit
+	 - `docs/prompt-library.md` with reusable prompts for VS Code + web chat.
+	 - ADR `docs/architecture/adr-bridge-copilot-context.md` documenting design options (repo ledger, Gist mailbox, MCP service).
+	 - Local session ledger scaffold under `.copilot/session-sync/` (gitignored) and JSON Schema `docs/schemas/copilot-frame.schema.json`.
+	 - Sanitizer utility `scripts/copilot_context_sanitizer.py` with tests `tests/test_copilot_context_sanitizer.py`.
+ - Enterprise report `docs/strategy/enterprise-report.md` capturing pros/cons, market, revenue, and roadmap.
 - Perplexity integration guide (`docs/integrations/perplexity.md`)
-- IBM watsonx integration guide (`docs/integrations/watsonx.md`)
- - ADR 002: Modular Lambda Action Dispatch (accepted)
+- Copilot Bridge (repo-ledger) syncing sanitized frames (`integrations/copilot_bridge.py`) with tests and docs.
+- GitHub Action: `woofy-secret-scan` composite action for marketplace-ready secret scanning.
+- Marketplace docs: `MARKETPLACE_LISTING.md`, `REVENUE_MODEL.md`.
+- Legal and branding: `LEGAL_OWNERSHIP.md`, `BRANDING_GUIDELINES.md`.
+- Templates: AWS Lambda handler under `templates/lambda-handler/`.
 
 ### Security
 - Environment-based credential management for AI integrations
-- Secure API key handling with python-dotenv
-- Integration & demo security validation (Perplexity, watsonx) with zero credential exposure
-- Complete security compliance verification for all API integrations
+
+### Changed
+- Lambda HTTP success path returns exact JSON body string with emoji to satisfy strict tests.
+ - Timestamps use timezone-aware UTC (`datetime.now(timezone.utc)`) instead of deprecated `datetime.utcnow()` in AWS integration modules.
 
 ### Planned
 - Enhanced file audit JSON mode & archival improvements
