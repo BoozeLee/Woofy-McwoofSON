@@ -1,5 +1,4 @@
-# Example .env for WoofyMcWOOFSON OAuth
-GOOGLE_CLIENT_ID=your-google-client-id-here
-GOOGLE_CLIENT_SECRET=your-google-client-secret-here
-GOOGLE_REDIRECT_URI=https://yourdomain.com/oauth2callback
-# Add additional configs as needed
+GITHUB_TOKEN=
+STRIPE_KEY=
+AWS_ACCESS_KEY=
+GEMINI_API_KEY=
