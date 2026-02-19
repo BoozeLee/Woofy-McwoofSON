@@ -27,7 +27,7 @@ jobs:
       - name: 📊 Coverage Report
         run: make coverage
       - name: 📤 Upload coverage artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-report
           path: |
@@ -38,7 +38,7 @@ jobs:
       - name: 📄 Generate summary
         run: make audit-summary || true
       - name: 📤 Upload repo summary artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: enterprise-file-summary
           path: ENTERPRISE_FILE_SUMMARY.md
