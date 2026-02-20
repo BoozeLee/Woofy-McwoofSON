@@ -11,7 +11,7 @@ jobs:
     name: 🛡️ Security & Compliance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Secret Scanning
         run: |
           echo "🔍 Scanning for exposed secrets..."
@@ -21,7 +21,7 @@ jobs:
     name: 📚 Documentation Validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Validate Knowledge Vault
         run: |
           echo "📋 Checking knowledge vault completeness..."
@@ -32,7 +32,7 @@ jobs:
     name: 🏢 Enterprise Compliance Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Compliance Validation
         run: |
           echo "🎯 Validating enterprise compliance..."
