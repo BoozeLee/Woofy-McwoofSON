@@ -1,33 +1,28 @@
-# 🦴 SECURITY POLICY
+# Security Policy
 
-WOOFY McWOOFSON takes security as seriously as a dog takes belly rubs.
+## Supported Versions
 
-## 🛡️ Reporting a Vulnerability
+Currently supporting the latest version of Woofy-McwoofSON.
 
-If you discover a vulnerability, **DO NOT bark about it publicly!**
-Please report it responsibly by emailing: [security@bakery-street-projct.com](mailto:security@bakery-street-projct.com)
+## Reporting a Vulnerability
 
-## 🔒 Enterprise Security Features
+If you discover a security vulnerability, please follow these steps:
 
-- **Branch protection** and required reviews
-- **GitHub secret scanning** enabled
-- **No PII stored unencrypted** (WOOFY rolls over sensitive data)
-- **AWS-native encryption** for all data at rest & transit
-- **AI Integration Security**: Environment-based credential management for Perplexity, IBM watsonx, and Google Gemini
-- **API Key Protection**: All AI service credentials loaded from secure environment variables
+1. **DO NOT** open a public issue
+2. Email us at security@example.com with details
+3. Include steps to reproduce the vulnerability
+4. We will respond within 48 hours
 
-## 🕵️‍♂️ Compliance
+We take security seriously and will work with you to resolve any issues.
 
-- GDPR, HIPAA, and enterprise policy ready
-- All API integrations follow least-privilege access
-- Automated audit trails and monitoring
+## Security Best Practices
 
-## 🐕 Security Champion
+- Keep dependencies up to date
+- Review third-party code before integrating
+- Use environment variables for sensitive data
+- Implement proper authentication and authorization
+- Regular security audits are recommended
 
-Meet our Security Good Boy 🏆: WOOFY McWOOFSON
+## Dependency Scanning
 
-Stay safe, stay compliant, and always wag your tail! 🐾
-
----
-
-**Maintained by BoozeLee, 2025-09-08**
+This project uses automated dependency scanning via GitHub Actions. Security alerts will be automatically created for vulnerable dependencies.
