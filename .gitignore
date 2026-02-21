@@ -1,92 +1,36 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / JS
+node_modules/
+.npm/
+dist/
+
+# Lua
+*.luac
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Secrets — never commit these
 .env
 .env.*
-
-# VSCode
-.vscode/
+!.env.example
+*.pem
+*.key
+secrets/
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Node
-node_modules/
-
-# Misc
-*.log
-*.zip
-
-# MCP Server Security Files
-integrations/github-mcp-server/.env
-integrations/github-mcp-server/config.yaml
-integrations/github-mcp-server/*.log
-
-# KiloCoder Generated Files
-*.tmp
-*.backup
-*_backup_*
-
-# AWS Credentials
-.aws/
-credentials
-
-# Security Scan Results
-security-scan-results/
-*.sarif
-
-# Build Artifacts
-build/
-dist/
-*.egg-info/
-
-# Enterprise Security Files
-*.key
-*.pem
-*.p12
-*.pfx
-*.jks
-secrets/
-.vault/
-*.vault
-
-# API Keys and Tokens
-api_keys.json
-secrets.json
-credentials.json
-*.keychain
-
-# Database and Cache
-*.db
-*.sqlite
-*.sqlite3
-.cache/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# IDE and Editor Files
-.idea/
-*.swp
-*.swo
-*~
-
-# OS Specific
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Temporary Files
-*.tmp
-*.temp
-*.bak
-*.backup
-*~
