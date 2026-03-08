@@ -56,4 +56,4 @@ No negative business impact anticipated. All changes reviewed by Amazon Q.
 - Test and scan enhancements: See `/tests/` and workflow logs
 - DETAILED_TRANSITION_REPORT.md (project transition)
 
-🐾 _Handler logic is now future-proof, secure, and easy for all teams to maintain!_
+🐾 _Handler logic is now future-proof, secure, and easy for all teams to maintain!_</PR_NUMBER>
