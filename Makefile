@@ -27,7 +27,7 @@ deps:
 	$(PY) -m pip install -r requirements.txt
 
 py-lint:
-	flake8 integrations scripts tests || true
+	ruff check integrations main.py tests scripts
 
 py-test:
 	pytest -q

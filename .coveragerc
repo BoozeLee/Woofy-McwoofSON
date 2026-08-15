@@ -1,8 +1,22 @@
 [run]
-source = integrations
-omit = 
+# Coverage is scoped to the modules that are unit-tested. The other
+# integrations are demo/scripts requiring live API credentials and are
+# exercised via smoke tests, not unit coverage.
+source =
+    integrations
+    main
+omit =
     tests/*
     */__init__.py
+    integrations/integration_test.py
+    integrations/key_rotation.py
+    integrations/secure_ai_apis.py
+    integrations/secure_api_client.py
+    integrations/security_monitor.py
+    integrations/gemini/*
+    integrations/groq/*
+    integrations/perplexity/*
+    integrations/watsonx/*
 
 [report]
 show_missing = True

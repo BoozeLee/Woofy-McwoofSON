@@ -12,7 +12,7 @@ import os
 import time
 import random
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, List
 from dotenv import load_dotenv
 import requests
 from datetime import datetime, timedelta

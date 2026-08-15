@@ -8,7 +8,7 @@ import boto3
 import json
 import logging
 from botocore.exceptions import ClientError, NoCredentialsError
-from typing import Dict, Optional
+from typing import Dict
 import os
 
 class SecureAPIManager:
