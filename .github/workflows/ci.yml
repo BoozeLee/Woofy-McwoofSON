@@ -1,6 +1,7 @@
 name: CI — Woofy-McwoofSON
 
 on:
+  workflow_dispatch:
   push:
     branches: [main, master]
   pull_request:
