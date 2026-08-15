@@ -20,7 +20,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Lint (ruff)
-        run: ruff check integrations main.py tests scripts || true
+        run: ruff check integrations main.py tests scripts
       - name: Security scan (bandit)
         run: bandit -r integrations main.py -ll -q
       - name: Tests (pytest)
