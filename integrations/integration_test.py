@@ -53,13 +53,13 @@ def test_secure_imports():
     print("-" * 40)
 
     try:
-        from secure_ai_apis import KiloCoderSecureAI, SecurityError
+        from secure_ai_apis import KiloCoderSecureAI, SecurityError  # noqa: F401
         print("✅ Secure AI APIs: IMPORTED")
 
-        from key_rotation import AutomatedKeyRotation
+        from key_rotation import AutomatedKeyRotation  # noqa: F401
         print("✅ Key Rotation: IMPORTED")
 
-        from security_monitor import SecurityMonitor, get_security_status
+        from security_monitor import SecurityMonitor, get_security_status  # noqa: F401
         print("✅ Security Monitor: IMPORTED")
 
         print("\n✅ Secure imports: PASSED")
@@ -78,16 +78,16 @@ def test_secure_client_initialization():
         from secure_ai_apis import SecurePerplexityClient, SecureOpenRouterClient
 
         # Test Perplexity client initialization
-        perplexity = SecurePerplexityClient()
+        perplexity = SecurePerplexityClient()  # noqa: F841
         print("✅ Perplexity client: INITIALIZED")
 
         # Test OpenRouter client initialization
-        openrouter = SecureOpenRouterClient()
+        openrouter = SecureOpenRouterClient()  # noqa: F841
         print("✅ OpenRouter client: INITIALIZED")
 
         # Test combined client
         from secure_ai_apis import KiloCoderSecureAI
-        ai = KiloCoderSecureAI()
+        ai = KiloCoderSecureAI()  # noqa: F841
         print("✅ Combined AI client: INITIALIZED")
 
         print("\n✅ Client initialization: PASSED")

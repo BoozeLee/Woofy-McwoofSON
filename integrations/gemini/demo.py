@@ -53,8 +53,8 @@ def main():
                 print(f"❌ Query failed: {str(e)}")
 
         # List available models
-        print("
-📋 Fetching available models..."        try:
+        print("\n📋 Fetching available models...")
+        try:
             models = client.list_models()
             print(f"✅ Found {len(models['models'])} Gemini models")
             for model in models['models'][:3]:  # Show first 3

@@ -8,12 +8,11 @@ Security Level: 🔒 ENTERPRISE GRADE
 Zero-Exposure Implementation: ✅ ACTIVE
 """
 
-import os
 import json
 import schedule
 import time
-from datetime import datetime, timedelta
-from typing import Dict, List
+from datetime import datetime
+from typing import Dict
 from dotenv import load_dotenv
 
 # Load environment variables

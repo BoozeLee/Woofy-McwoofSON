@@ -27,20 +27,34 @@ The "bakery-street-project/Woofy-McwoofSON" Python project is meticulously organ
 
 ### Installation
 ```bash
-git clone https://github.com/bakery-street-project/Woofy-McwoofSON.cd Woofy-McwoofSON
+git clone https://github.com/bakery-street-project/Woofy-McwoofSON.git
+cd Woofy-McwoofSON
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
+cp .env.example .env   # then set WEBHOOK_SECRET
 ```
 
 ### Usage
 ```bash
-# Run the application
-python main.py
+# Run the webhook server (GitHub signature verification + autonomous scheduler)
+WEBHOOK_SECRET=$(openssl rand -hex 32) python main.py
+
+# Endpoints
+curl http://127.0.0.1:8080/health   # agent health probe
+curl http://127.0.0.1:8080/woof     # agent greeting
+curl -X POST http://127.0.0.1:8080/webhook -H "X-Hub-Signature-256: ..." -d '{"type":"push",...}'
 
 # Run tests
 pytest
+
+# Lint + security scan
+ruff check integrations main.py tests scripts
+bandit -r integrations main.py -ll
 ```
+
+### How the scheduler decides
+`integrations/scheduler.py` watches the event stream and decides **when to act — and which tasks not to do** (ADR 003). It skips draft PRs, bot noise, duplicates, ignored branches (`main`/`master`), out-of-scope paths, low-priority events, and enforces a per-repository cooldown. When it acts, it hands a `WorkOrder` to the agent (`integrations/lambda_woofy_handler.py`) and you review the PR.
 
 ## Contributing
 

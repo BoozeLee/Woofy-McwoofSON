@@ -6,7 +6,11 @@ jobs:
   compliance:
     runs-on: ubuntu-latest
     steps:
-      - name: 🐾 Checkout code
-        uses: actions/checkout@v3
-      - name: 🐾 Run security scan
-        run: npm run security-check
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 🐾 Install tools
+        run: pip install bandit
+      - name: 🐾 Security scan (bandit)
+        run: bandit -r integrations main.py -ll -q
